@@ -16,7 +16,7 @@ export default {
         lg: "24px",
         xl: "32px",
         "2xl": "40px",
-      }
+      },
     },
   },
   plugins: [],
