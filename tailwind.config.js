@@ -2,12 +2,7 @@
 export default {
   content: ["./html/**/*.{html,php}", "./js/**/*.js"],
   theme: {
-    extend: {
-      fontFamily: {
-        Jost: ["Jost", "sans-serif"],
-        Lobster: ["Lobster", "sans-serif"],
-      },
-    },
+    extend: {},
     container: {
       center: true,
       padding: {

@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&display=swap');
 
-body {
-   @apply bg-[#0D0321];
+@theme {
+  --font-jost: "Jost", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+  --font-bbhsansbogle : "BBH Sans Bogle", sans-serif;
+  --font-bbhsanshegarty : "BBH Sans Hegarty", sans-serif;
+  --font-bbhsansbartle : "BBH Sans Bartle", sans-serif;
 }
 
-font-Lobster {
-    font-family: 'Lobster', sans-serif;
+body {
+  @apply bg-[#0D0321];
 }
