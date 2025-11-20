@@ -9,6 +9,10 @@
   --font-bbhsansbartle : "BBH Sans Bartle", sans-serif;
 }
 
+. {
+  @apply font-['Jost'];
+}
+
 body {
   @apply bg-[#0D0321];
 }
