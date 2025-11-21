@@ -2,7 +2,14 @@
 export default {
   content: ["./html/**/*.{html,php}", "./js/**/*.js"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#8a2be2',      // Purple
+        secondary: '#ff1493',    // Pink
+        dark: '#1a0b2e',         // Dark purple
+        darkPurple: '#2d1b4e',   // Medium purple
+      }
+    },
     container: {
       center: true,
       padding: {

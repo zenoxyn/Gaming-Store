@@ -9,6 +9,53 @@
   --font-bbhsansbartle : "BBH Sans Bartle", sans-serif;
 }
 
-body {
-  @apply bg-[#0D0321];
-}
+html, body {
+            height: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* stop horizontal dragging showing white edges */
+            background-attachment: fixed; /* keep gradient fixed to avoid seams */
+            -webkit-overflow-scrolling: touch;
+            background-color: #1a0b2e; /* fallback solid color matching page */
+        }
+        body {
+            position: relative;
+            background: linear-gradient(to bottom right, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%);
+        }
+        .badge-new {
+            background: linear-gradient(to right, #8a2be2, #ff1493);
+        }
+        .badge-hot {
+            background: linear-gradient(to right, #8a2be2, #ff1493);
+        }
+        /* Hero entrance animation for controls */
+        @keyframes heroIn {
+            from { transform: translateY(12px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-hero-in { animation: heroIn 480ms cubic-bezier(.2,.8,.2,1) forwards; }
+        /* Improved hero control transitions and press feedback */
+        .hero-control {
+            transition: background 220ms ease, color 220ms ease, transform 180ms ease, box-shadow 220ms ease, border-color 220ms ease;
+            will-change: transform, box-shadow, background;
+        }
+        .hero-control[aria-pressed="true"] {
+            color: #ffffff;
+            border-color: rgba(138,43,226,0.9);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(138,43,226,0.18);
+        }
+        .hero-control.pressed {
+            transform: translateY(1px) scale(0.985) !important;
+            box-shadow: none !important;
+            transition-duration: 120ms;
+            opacity: 0.98;
+        }
+        .hero-control:focus {
+            outline: none;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        .badge-new, .badge-hot {
+            color: #fff;
+        }

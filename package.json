@@ -1,13 +1,14 @@
 {
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.17",
-    "tailwindcss": "^4.1.17"
+    "@tailwindcss/cli": "^4.1.17"
   },
   "name": "gaming-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "tailwindcss": "^4.1.17"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tailwindcss -i ./css/style.css -o ./css/output.css --watch"
