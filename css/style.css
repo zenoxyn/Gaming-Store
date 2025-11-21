@@ -9,6 +9,7 @@
   --font-bbhsansbartle : "BBH Sans Bartle", sans-serif;
 }
 
+<<<<<<< HEAD
 html, body {
             height: 100%;
             min-height: 100vh;
@@ -59,3 +60,16 @@ html, body {
         .badge-new, .badge-hot {
             color: #fff;
         }
+=======
+. {
+  @apply font-['Jost'];
+}
+
+body {
+  @apply bg-[#0D0321];
+}
+
+.warna-text {
+  @apply text-[#C4C1EA];
+}
+>>>>>>> a902f94e1b38867ba180e020f0b667a56d4bd378
