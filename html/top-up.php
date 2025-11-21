@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="min-h-screen overflow-x-hidden text-white">
+
+    <!-- Header -->
+    <?php include 'header.html'; ?>
     <!-- Hero Section -->
     <section class="px-5 mx-auto mt-8 max-w-7xl">
         

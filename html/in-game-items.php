@@ -16,8 +16,8 @@
 
         <!-- HEADER GRADIENT -->
         <div class="w-full h-48 bg-linear-to-r from-[#6A0DAD] via-[#4B0FAF] to-[#2AD1C9] p-6">
-            <button class="text-sm px-4 py-1 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur transition">
-                ← Back
+            <button class="text-md px-4 py-1 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur transition font-bold gap-2">
+            <i class="ri-arrow-left-s-line "></i> Back
             </button>
 
             <h1 class="text-4xl font-bold mt-6">8 Ball Pool</h1>
