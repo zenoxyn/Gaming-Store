@@ -12,6 +12,7 @@
 
     <!-- Hero Section -->
     <section class="px-5 mx-auto mt-8 max-w-7xl">
+
         <div class="from-primary/30 to-secondary/30 rounded-3xl p-16 relative overflow-hidden min-h-[300px] flex items-center">
             <img src="https://cdn-game-photos.zeusx.com/90b1f031-6b94-45b7-9fb2-7d408e7d29cb.png" alt="" class="absolute top-0 left-0 object-cover w-full h-full opacity-80">
             <div class="z-10 max-w-xl">
@@ -20,7 +21,7 @@
                     <span>Kembali</span>
                 </button>
                 <h1 id="heroTitle" class="mb-4 text-6xl font-bold text-transparent translate-y-4 opacity-0 bg-linear-to-r from-white to-yellow-300 bg-clip-text">
-                    Genshin Impact
+                    Call Of Duty
                 </h1>
                 <p class="mb-8 text-lg text-gray-200">
                     A family way to get your favourite characters and weapons!
@@ -154,6 +155,9 @@
 
     <!-- footer -->
     <?php include 'footer.html'; ?>
+
+    <script src="/Gaming-Store/js/script.js"></script>
 </body>
 
 </html>
+
