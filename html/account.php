@@ -97,7 +97,7 @@
         <button class="px-4 py-2 transition-colors border rounded-lg bg-[#8a2be2]/20 border-[#8a2be2]/40 hover:bg-[#8a2be2]/40">
             Prev
         </button>
-        <button class="px-4 py-2 font-bold rounded-lg bg-gradient-to-r from-[#8a2be2] to-[#ff1493]">
+        <button class="px-4 py-2 font-bold rounded-lg bg-linear-to-r from-[#8a2be2] to-[#ff1493]">
             1
         </button>
         <button class="px-4 py-2 transition-colors border rounded-lg bg-[#8a2be2]/20 border-[#8a2be2]/40 hover:bg-[#8a2be2]/40">
