@@ -3,13 +3,13 @@
 
 <head>
     <?php include '../html/head.html'; ?>
-    <title>Gaming Store - Account</title>
+    <title>Gaming Store - Top-up</title>
 </head>
 
-<body class="min-h-screen overflow-x-hidden text-white bg-linear-to-br from-dark via-darkPurple to-dark">
+<body class="min-h-screen overflow-x-hidden text-white">
 
-    <?php include "header.html"; ?>
-
+    <!-- Header -->
+    <?php include 'header.html'; ?>
     <!-- Hero Section -->
     <section class="px-5 mx-auto mt-8 max-w-7xl">
 
@@ -24,7 +24,7 @@
                     Free Fire
                 </h1>
                 <p class="mb-8 text-lg text-gray-200">
-                    A family way to get your favourite characters and weapons!
+                    Pilih akun terbaik kamu disini!!
                 </p>
 
                 <div class="flex gap-4">
@@ -40,7 +40,7 @@
                     </button>
                     <button data-category="Gaming Services" class="flex items-center gap-2 px-5 py-3 text-gray-100 transition transform cursor-pointer hero-control bg-white/10 rounded-xl hover:scale-105 focus:outline-none" aria-pressed="false">
                         <i class="fas fa-gamepad"></i>
-                        <span>Gaming Services</span>
+                        <span>in-Game Items</span>
                         <span class="badge-hot bg-linear-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">HOT</span>
                     </button>
                 </div>
@@ -97,7 +97,7 @@
         <button class="px-4 py-2 transition-colors border rounded-lg bg-[#8a2be2]/20 border-[#8a2be2]/40 hover:bg-[#8a2be2]/40">
             Prev
         </button>
-        <button class="px-4 py-2 font-bold rounded-lg bg-linear-to-r from-[#8a2be2] to-[#ff1493]">
+        <button class="px-4 py-2 font-bold rounded-lg bg-gradient-to-r from-[#8a2be2] to-[#ff1493]">
             1
         </button>
         <button class="px-4 py-2 transition-colors border rounded-lg bg-[#8a2be2]/20 border-[#8a2be2]/40 hover:bg-[#8a2be2]/40">
@@ -152,10 +152,8 @@
         </div>
     </section>
 
-
-    <!-- Footer -->
+    <!-- footer -->
     <?php include 'footer.html'; ?>
-
     <script>
         const products = [{
                 title: "Genshin Impact 64650+9600 unused genesis crystal + ALL 5stars + Only need to...",
@@ -414,24 +412,24 @@
 
         function createCard(product) {
             const card = document.createElement('div');
-            card.className = 'bg-darkPurple/90 rounded-2xl overflow-hidden border-2 border-primary/20 hover:-translate-y-1 hover:border-primary transition-all cursor-pointer';
+            card.className = 'bg-[#2d1b4e]/90 rounded-2xl overflow-hidden border-2 border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer';
             card.innerHTML = `
-                <div class="relative flex items-center justify-center text-5xl h-44 bg-gradient-to-br from-darkPurple to-purple-900">
+                <div class="relative flex items-center justify-center text-5xl h-44 bg-gradient-to-br from-[#2d1b4e] to-purple-900">
                     ${product.icon}
                     <div class="absolute flex items-center gap-1 px-3 py-1 text-xs rounded-full top-2 right-2 bg-black/70">
                         <i class="text-yellow-400 fas fa-star"></i>
                         Top-rate
                     </div>
-                    <div class="absolute flex items-center justify-center rounded-lg bottom-2 right-2 bg-primary/90 w-9 h-9">
+                    <div class="absolute flex items-center justify-center rounded-lg bottom-2 right-2 bg-[#8a2be2]/90 w-9 h-9">
                         <i class="text-sm fas fa-tag"></i>
                     </div>
                 </div>
                 <div class="p-4">
-                    <div class="mb-2 text-xs font-semibold text-primary">${product.category}</div>
+                    <div class="mb-2 text-xs font-semibold text-[#8a2be2]">${product.category}</div>
                     <div class="h-10 mb-3 overflow-hidden text-sm leading-tight">${product.title}</div>
                     <div class="mb-3 text-xl font-bold text-yellow-400">${product.price}</div>
-                    <div class="flex items-center gap-2 pt-3 border-t border-primary/20">
-                        <div class="flex items-center justify-center w-6 h-6 text-xs rounded-full bg-gradient-to-br from-primary to-secondary">
+                    <div class="flex items-center gap-2 pt-3 border-t border-[#8a2be2]/20">
+                        <div class="flex items-center justify-center w-6 h-6 text-xs rounded-full bg-gradient-to-br from-[#8a2be2] to-[#ff1493]">
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="flex items-center flex-1 gap-1 text-xs">
@@ -515,7 +513,7 @@
 
             // normalize visual state
             btn.setAttribute('aria-pressed', 'false');
-            btn.classList.remove('bg-primary/60', 'text-white', 'border-primary');
+            btn.classList.remove('bg-[#8a2be2]/60', 'text-white', 'border-[#8a2be2]');
             btn.classList.add('bg-white/10', 'text-gray-100');
 
             btn.addEventListener('click', () => {
@@ -524,14 +522,14 @@
                 // reset others
                 heroControls.forEach(b => {
                     b.setAttribute('aria-pressed', 'false');
-                    b.classList.remove('ring-2', 'ring-primary', 'bg-primary/60', 'text-white', 'border-primary');
+                    b.classList.remove('ring-2', 'ring-[#8a2be2]', 'bg-[#8a2be2]/60', 'text-white', 'border-[#8a2be2]');
                     b.classList.add('bg-white/10', 'text-gray-100');
                 });
 
                 if (!isActive) {
                     // activate this button
                     btn.setAttribute('aria-pressed', 'true');
-                    btn.classList.add('ring-2', 'ring-primary', 'bg-primary/60', 'text-white', 'border-primary');
+                    btn.classList.add('ring-2', 'ring-[#8a2be2]', 'bg-[#8a2be2]/60', 'text-white', 'border-[#8a2be2]');
 
                     // determine filtering mapping
                     const cat = btn.getAttribute('data-category');
