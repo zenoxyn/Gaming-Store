@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top-up & Services - ZEUSX.COM</title>
@@ -127,7 +129,12 @@
             50% { transform: translateY(-10px); }
         }
     </style>
+=======
+    <?php include '../html/head.html'; ?>
+    <title>Gaming Store - Top-up</title>
+>>>>>>> 17342e4e97572513ef07854aa52ccbc664524ff6
 </head>
+
 <body class="min-h-screen overflow-x-hidden text-white">
     <!-- Loading Overlay Premium -->
 <div class="loading-overlay" id="loadingOverlay">
@@ -149,7 +156,7 @@
     <?php include 'header.html'; ?>
     <!-- Hero Section -->
     <section class="px-5 mx-auto mt-8 max-w-7xl">
-        
+
         <div class="from-primary/30 to-secondary/30 rounded-3xl p-16 relative overflow-hidden min-h-[300px] flex items-center">
             <img src="https://cdn-game-photos.zeusx.com/4a28aae3-9f69-46e8-bccc-4215613ade0e.png" alt="" class="absolute top-0 left-0 object-cover w-full h-full opacity-80">
             <div class="z-10 max-w-xl">
@@ -157,32 +164,32 @@
                     <i class="fas fa-arrow-left"></i>
                     <span>Kembali</span>
                 </button>
-                <h1 id="heroTitle" class="mb-4 text-6xl font-bold text-transparent translate-y-4 opacity-0 bg-gradient-to-r from-white to-yellow-300 bg-clip-text">
+                <h1 id="heroTitle" class="mb-4 text-6xl font-bold text-transparent translate-y-4 opacity-0 bg-linear-to-r from-white to-yellow-300 bg-clip-text">
                     Genshin Impact
                 </h1>
                 <p class="mb-8 text-lg text-gray-200">
                     A family way to get your favourite characters and weapons!
                 </p>
-                
+
                 <div class="flex gap-4">
                     <button data-category="Accounts" class="flex items-center gap-2 px-5 py-3 text-gray-100 transition cursor-pointer hero-control bg-white/10 rounded-xl hover:scale-105 focus:outline-none" aria-pressed="false">
                         <i class="fas fa-user"></i>
                         <span>Accounts</span>
-                        <span class="badge-new bg-gradient-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">NEW</span>
+                        <span class="badge-new bg-linear-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">NEW</span>
                     </button>
                     <button data-category="Top-ups" class="flex items-center gap-2 px-5 py-3 text-gray-100 transition transform cursor-pointer hero-control bg-white/10 rounded-xl hover:scale-105 focus:outline-none" aria-pressed="false">
                         <i class="fas fa-tag"></i>
                         <span>Top-ups</span>
-                        <span class="badge-new bg-gradient-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">NEW</span>
+                        <span class="badge-new bg-linear-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">NEW</span>
                     </button>
                     <button data-category="Gaming Services" class="flex items-center gap-2 px-5 py-3 text-gray-100 transition transform cursor-pointer hero-control bg-white/10 rounded-xl hover:scale-105 focus:outline-none" aria-pressed="false">
                         <i class="fas fa-gamepad"></i>
                         <span>Gaming Services</span>
-                        <span class="badge-hot bg-gradient-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">HOT</span>
+                        <span class="badge-hot bg-linear-to-r from-secondary to-primary px-2 py-0.5 rounded-full text-xs font-bold">HOT</span>
                     </button>
                 </div>
             </div>
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-yellow-500/10 to-transparent"></div>
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-yellow-500/10 to-transparent"></div>
         </div>
     </section>
 
@@ -191,9 +198,9 @@
         <div class="p-6 border-2 bg-[#2d1b4e]/90 border-[#8a2be2]/30 rounded-2xl">
             <h2 class="mb-4 text-xl font-semibold">Search Items</h2>
             <div class="flex gap-4">
-                <input type="text" placeholder="Item search..." 
+                <input type="text" placeholder="Item search..."
                     class="flex-1 px-5 py-4 text-white border-2 rounded-xl border-[#8a2be2]/30 bg-[#1a0b2e]/80 focus:outline-none focus:border-[#8a2be2]">
-                <button class="bg-gradient-to-r from-[#8a2be2] to-[#ff1493] px-10 py-4 rounded-xl font-bold hover:-translate-y-0.5 transition-transform">
+                <button class="bg-linear-to-r from-[#8a2be2] to-[#ff1493] px-10 py-4 rounded-xl font-bold hover:-translate-y-0.5 transition-transform">
                     Search
                 </button>
             </div>
@@ -234,7 +241,7 @@
         <button class="px-4 py-2 transition-colors border rounded-lg bg-[#8a2be2]/20 border-[#8a2be2]/40 hover:bg-[#8a2be2]/40">
             Prev
         </button>
-        <button class="px-4 py-2 font-bold rounded-lg bg-gradient-to-r from-[#8a2be2] to-[#ff1493]">
+        <button class="px-4 py-2 font-bold rounded-lg bg-linear-to-r from-[#8a2be2] to-[#ff1493]">
             1
         </button>
         <button class="px-4 py-2 transition-colors border rounded-lg bg-[#8a2be2]/20 border-[#8a2be2]/40 hover:bg-[#8a2be2]/40">
@@ -289,107 +296,249 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="pt-12 pb-8 mt-20 border-t-2 bg-[#1a0b2e]/95 border-[#8a2be2]/30">
-        <div class="px-5 mx-auto max-w-7xl">
-            <div class="grid grid-cols-3 gap-12 mb-10">
-                <div class="flex flex-col gap-5">
-                    <div class="flex items-center gap-3">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#8a2be2] to-[#ff1493]">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <span class="text-2xl font-bold">ZEUSX.COM</span>
-                    </div>
-                    <p class="text-sm leading-relaxed text-gray-400">
-                        Trading platform for gamers all over the world
-                    </p>
-                    <div class="flex gap-4">
-                        <div class="flex items-center justify-center w-10 h-10 transition-colors rounded-full cursor-pointer bg-[#8a2be2]/30 hover:bg-[#8a2be2]/60">
-                            <i class="fab fa-facebook-f"></i>
-                        </div>
-                        <div class="flex items-center justify-center w-10 h-10 transition-colors rounded-full cursor-pointer bg-[#8a2be2]/30 hover:bg-[#8a2be2]/60">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <div class="flex items-center justify-center w-10 h-10 transition-colors rounded-full cursor-pointer bg-[#8a2be2]/30 hover:bg-[#8a2be2]/60">
-                            <i class="fab fa-twitter"></i>
-                        </div>
-                        <div class="flex items-center justify-center w-10 h-10 transition-colors rounded-full cursor-pointer bg-[#8a2be2]/30 hover:bg-[#8a2be2]/60">
-                            <i class="fab fa-youtube"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="mb-5 text-lg font-semibold">Buy & Sell</h3>
-                    <div class="flex flex-col gap-3">
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">ZeusX Guarantee</div>
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">Buying Guidelines</div>
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">Selling Guidelines</div>
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">Why Use Us?</div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="mb-5 text-lg font-semibold">Resources</h3>
-                    <div class="flex flex-col gap-3">
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">About Us</div>
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">Help Center</div>
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">Contact Us</div>
-                        <div class="text-sm text-gray-400 transition-colors cursor-pointer hover:text-white">Blog</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pt-8 border-t border-[#8a2be2]/20">
-                <div class="flex flex-wrap justify-center gap-4 mb-5">
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">VISA</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">MC</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">AMEX</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">JCB</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">DISC</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">QRIS</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">DANA</div>
-                    <div class="flex items-center justify-center w-12 h-8 text-xs font-bold text-gray-800 bg-white rounded">OVO</div>
-                </div>
-                <p class="text-xs text-center text-gray-500">
-                    © 2025 ZeusX Pte Ltd. • Terms • Privacy<br>All rights are reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
-
+    <!-- footer -->
+    <?php include 'footer.html'; ?>
     <script>
-        const products = [
-            { title: "Genshin Impact 64650+9600 unused genesis crystal + ALL 5stars + Only need to...", price: "$19.00", category: "Genshin Impact", seller: "Kartogaming", rating: "5.0 (456)", icon: "🎮" },
-            { title: "🔰 5⭐80 Raiden Shogun, Crystals All servers ⚡ Only need to...", price: "$79.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "⚡" },
-            { title: "💎 99820 Genshin Crystals AS Servers Login Needed 🔰", price: "$657.51", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "💎90820 Genshin Crystals All Servers Login Needed", price: "$42.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "🔰5⭐80 Raiden Shogun, Crystals ⚡ All servers ⚡ Only need to...", price: "$9.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "⚡" },
-            { title: "UID: ALL SERVER| Blessing of the Welkin Moon", price: "$3.00", category: "Genshin Impact", seller: "Lazy China", rating: "5.0 (432)", icon: "🌙" },
-            { title: "💎 1600+300 Genshin Crystals All Servers Login Needed 🔰", price: "$79.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "🔰 1⭐80 Raiden Shogun, Crystals ⚡ All servers ⚡ Only need to...", price: "$637.31", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "⚡" },
-            { title: "Genshin Impact Reward Starter | All Servers", price: "$2.99", category: "Genshin Impact", seller: "Anonymous", rating: "4.8 (234)", icon: "🎁" },
-            { title: "💎 8080 Genshin Crystals All Servers Login Needed", price: "$75.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "💎 1⭐00+300 Genshin Crystals All Servers Login Needed 🔰", price: "$4.32", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "💎 Genshin Crystals 3280+600 All Servers Login Needed", price: "$4.32", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "SGD-100 Crystals", price: "$43.00", category: "Top-ups", seller: "ZeuxRazer", rating: "4.9 (2073)", icon: "💳" },
-            { title: "Genshin Gift Card Reward Starter Pack", price: "$14.99", category: "Top-ups", seller: "SteamGamer", rating: "4.7 (156)", icon: "🎁" },
-            { title: "6480+1600 Crystals", price: "$60.89", category: "Genshin Impact", seller: "PleaseBuy", rating: "4.8 (1452)", icon: "💎" },
-            { title: "💎 3280+600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰", price: "$37.00", category: "Genshin Impact", seller: "CristalyinG.E~", rating: "5.0 (413)", icon: "💎" },
-            { title: "💎 1980 + 600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰", price: "$23.00", category: "Genshin Impact", seller: "CristalyinG.E~", rating: "5.0 (413)", icon: "💎" },
-            { title: "💎 3280+600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰", price: "$37.00", category: "Genshin Impact", seller: "CristalyinG.E~", rating: "5.0 (413)", icon: "💎" },
-            { title: "💎 3280+600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰", price: "$37.00", category: "Genshin Impact", seller: "CristalyinG.E~", rating: "5.0 (413)", icon: "💎" },
-            { title: "💎 6480+1600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰", price: "$78.00", category: "Genshin Impact", seller: "CristalyinG.E~", rating: "5.0 (413)", icon: "💎" },
-            { title: "💎 8080+1600 Genesis Crystals AS Servers Login Needed", price: "$42.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "💎 8080+1600 Genesis Crystals All Servers Login Needed", price: "$42.00", category: "Genshin Impact", seller: "Eyed Store", rating: "5.0 (1034)", icon: "💎" },
-            { title: "KAMC6+500 Gensis Crystals Moon", price: "$4.00", category: "Top-ups", seller: "Yukez", rating: "5.0 (99015)", icon: "🌙" },
-            { title: "💎 6 + 300 + 600 Gensis Crystals Login Needed + UID and CS Proof", price: "$42.00", category: "Genshin Impact", seller: "CristalyinG.E~", rating: "5.0 (1023)", icon: "💎" },
-            { title: "ALL SERVER! Genshin Genesis Crystals (All Package Available)", price: "$4.00", category: "Top-ups", seller: "Yellow", rating: "5.0 (19863)", icon: "💎" },
-            { title: "ALL SERVER! Genshin Genesis Crystals (All Package Available)", price: "$76.00", category: "Top-ups", seller: "Yellow", rating: "5.0 (19863)", icon: "💎" },
-            { title: "ALL SERVER! Genshin Genesis Crystals (All Package Available)", price: "$40.00", category: "Top-ups", seller: "Yellow", rating: "5.0 (19863)", icon: "💎" },
-            { title: "6480+1600 Crystals Premium Account", price: "$85.00", category: "Genshin Impact", seller: "GameMaster", rating: "4.9 (567)", icon: "💎" },
-            { title: "Welkin Moon + BP Bundle", price: "$12.50", category: "Top-ups", seller: "FastTopup", rating: "5.0 (8234)", icon: "🌙" },
-            { title: "Limited 5-Star Character Account", price: "$125.00", category: "Genshin Impact", seller: "ProGamer", rating: "4.8 (892)", icon: "⭐" }
+        const products = [{
+                title: "Genshin Impact 64650+9600 unused genesis crystal + ALL 5stars + Only need to...",
+                price: "$19.00",
+                category: "Genshin Impact",
+                seller: "Kartogaming",
+                rating: "5.0 (456)",
+                icon: "🎮"
+            },
+            {
+                title: "🔰 5⭐80 Raiden Shogun, Crystals All servers ⚡ Only need to...",
+                price: "$79.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "⚡"
+            },
+            {
+                title: "💎 99820 Genshin Crystals AS Servers Login Needed 🔰",
+                price: "$657.51",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "💎90820 Genshin Crystals All Servers Login Needed",
+                price: "$42.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "🔰5⭐80 Raiden Shogun, Crystals ⚡ All servers ⚡ Only need to...",
+                price: "$9.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "⚡"
+            },
+            {
+                title: "UID: ALL SERVER| Blessing of the Welkin Moon",
+                price: "$3.00",
+                category: "Genshin Impact",
+                seller: "Lazy China",
+                rating: "5.0 (432)",
+                icon: "🌙"
+            },
+            {
+                title: "💎 1600+300 Genshin Crystals All Servers Login Needed 🔰",
+                price: "$79.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "🔰 1⭐80 Raiden Shogun, Crystals ⚡ All servers ⚡ Only need to...",
+                price: "$637.31",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "⚡"
+            },
+            {
+                title: "Genshin Impact Reward Starter | All Servers",
+                price: "$2.99",
+                category: "Genshin Impact",
+                seller: "Anonymous",
+                rating: "4.8 (234)",
+                icon: "🎁"
+            },
+            {
+                title: "💎 8080 Genshin Crystals All Servers Login Needed",
+                price: "$75.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "💎 1⭐00+300 Genshin Crystals All Servers Login Needed 🔰",
+                price: "$4.32",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "💎 Genshin Crystals 3280+600 All Servers Login Needed",
+                price: "$4.32",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "SGD-100 Crystals",
+                price: "$43.00",
+                category: "Top-ups",
+                seller: "ZeuxRazer",
+                rating: "4.9 (2073)",
+                icon: "💳"
+            },
+            {
+                title: "Genshin Gift Card Reward Starter Pack",
+                price: "$14.99",
+                category: "Top-ups",
+                seller: "SteamGamer",
+                rating: "4.7 (156)",
+                icon: "🎁"
+            },
+            {
+                title: "6480+1600 Crystals",
+                price: "$60.89",
+                category: "Genshin Impact",
+                seller: "PleaseBuy",
+                rating: "4.8 (1452)",
+                icon: "💎"
+            },
+            {
+                title: "💎 3280+600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰",
+                price: "$37.00",
+                category: "Genshin Impact",
+                seller: "CristalyinG.E~",
+                rating: "5.0 (413)",
+                icon: "💎"
+            },
+            {
+                title: "💎 1980 + 600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰",
+                price: "$23.00",
+                category: "Genshin Impact",
+                seller: "CristalyinG.E~",
+                rating: "5.0 (413)",
+                icon: "💎"
+            },
+            {
+                title: "💎 3280+600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰",
+                price: "$37.00",
+                category: "Genshin Impact",
+                seller: "CristalyinG.E~",
+                rating: "5.0 (413)",
+                icon: "💎"
+            },
+            {
+                title: "💎 3280+600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰",
+                price: "$37.00",
+                category: "Genshin Impact",
+                seller: "CristalyinG.E~",
+                rating: "5.0 (413)",
+                icon: "💎"
+            },
+            {
+                title: "💎 6480+1600 Genesis Crystals 🔰 VIA UID AND SERVER 🔰",
+                price: "$78.00",
+                category: "Genshin Impact",
+                seller: "CristalyinG.E~",
+                rating: "5.0 (413)",
+                icon: "💎"
+            },
+            {
+                title: "💎 8080+1600 Genesis Crystals AS Servers Login Needed",
+                price: "$42.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "💎 8080+1600 Genesis Crystals All Servers Login Needed",
+                price: "$42.00",
+                category: "Genshin Impact",
+                seller: "Eyed Store",
+                rating: "5.0 (1034)",
+                icon: "💎"
+            },
+            {
+                title: "KAMC6+500 Gensis Crystals Moon",
+                price: "$4.00",
+                category: "Top-ups",
+                seller: "Yukez",
+                rating: "5.0 (99015)",
+                icon: "🌙"
+            },
+            {
+                title: "💎 6 + 300 + 600 Gensis Crystals Login Needed + UID and CS Proof",
+                price: "$42.00",
+                category: "Genshin Impact",
+                seller: "CristalyinG.E~",
+                rating: "5.0 (1023)",
+                icon: "💎"
+            },
+            {
+                title: "ALL SERVER! Genshin Genesis Crystals (All Package Available)",
+                price: "$4.00",
+                category: "Top-ups",
+                seller: "Yellow",
+                rating: "5.0 (19863)",
+                icon: "💎"
+            },
+            {
+                title: "ALL SERVER! Genshin Genesis Crystals (All Package Available)",
+                price: "$76.00",
+                category: "Top-ups",
+                seller: "Yellow",
+                rating: "5.0 (19863)",
+                icon: "💎"
+            },
+            {
+                title: "ALL SERVER! Genshin Genesis Crystals (All Package Available)",
+                price: "$40.00",
+                category: "Top-ups",
+                seller: "Yellow",
+                rating: "5.0 (19863)",
+                icon: "💎"
+            },
+            {
+                title: "6480+1600 Crystals Premium Account",
+                price: "$85.00",
+                category: "Genshin Impact",
+                seller: "GameMaster",
+                rating: "4.9 (567)",
+                icon: "💎"
+            },
+            {
+                title: "Welkin Moon + BP Bundle",
+                price: "$12.50",
+                category: "Top-ups",
+                seller: "FastTopup",
+                rating: "5.0 (8234)",
+                icon: "🌙"
+            },
+            {
+                title: "Limited 5-Star Character Account",
+                price: "$125.00",
+                category: "Genshin Impact",
+                seller: "ProGamer",
+                rating: "4.8 (892)",
+                icon: "⭐"
+            }
         ];
 
         // Normalize products with metadata used for filtering/sorting
@@ -532,8 +681,8 @@ function hideLoading() {
 
             // normalize visual state
             btn.setAttribute('aria-pressed', 'false');
-            btn.classList.remove('bg-[#8a2be2]/60','text-white','border-[#8a2be2]');
-            btn.classList.add('bg-white/10','text-gray-100');
+            btn.classList.remove('bg-[#8a2be2]/60', 'text-white', 'border-[#8a2be2]');
+            btn.classList.add('bg-white/10', 'text-gray-100');
 
             btn.addEventListener('click', () => {
                 const isActive = btn.getAttribute('aria-pressed') === 'true';
@@ -541,14 +690,14 @@ function hideLoading() {
                 // reset others
                 heroControls.forEach(b => {
                     b.setAttribute('aria-pressed', 'false');
-                    b.classList.remove('ring-2','ring-[#8a2be2]','bg-[#8a2be2]/60','text-white','border-[#8a2be2]');
-                    b.classList.add('bg-white/10','text-gray-100');
+                    b.classList.remove('ring-2', 'ring-[#8a2be2]', 'bg-[#8a2be2]/60', 'text-white', 'border-[#8a2be2]');
+                    b.classList.add('bg-white/10', 'text-gray-100');
                 });
 
                 if (!isActive) {
                     // activate this button
                     btn.setAttribute('aria-pressed', 'true');
-                    btn.classList.add('ring-2','ring-[#8a2be2]','bg-[#8a2be2]/60','text-white','border-[#8a2be2]');
+                    btn.classList.add('ring-2', 'ring-[#8a2be2]', 'bg-[#8a2be2]/60', 'text-white', 'border-[#8a2be2]');
 
                     // determine filtering mapping
                     const cat = btn.getAttribute('data-category');
@@ -570,7 +719,7 @@ function hideLoading() {
             });
 
             // Press feedback for pointer and keyboard
-            btn.addEventListener('pointerdown', () => btn.classList.add('pressed','pressed'));
+            btn.addEventListener('pointerdown', () => btn.classList.add('pressed', 'pressed'));
             btn.addEventListener('pointerup', () => btn.classList.remove('pressed'));
             btn.addEventListener('pointercancel', () => btn.classList.remove('pressed'));
             btn.addEventListener('pointerleave', () => btn.classList.remove('pressed'));
@@ -585,10 +734,11 @@ function hideLoading() {
         // Animate hero title in
         const heroTitle = document.getElementById('heroTitle');
         setTimeout(() => {
-            heroTitle.classList.remove('opacity-0','translate-y-4');
-            heroTitle.classList.add('transition','duration-700','ease-out');
+            heroTitle.classList.remove('opacity-0', 'translate-y-4');
+            heroTitle.classList.add('transition', 'duration-700', 'ease-out');
         }, 300);
     </script>
 
 </body>
+
 </html>

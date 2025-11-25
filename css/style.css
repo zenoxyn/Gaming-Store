@@ -19,6 +19,7 @@ html, body {
             background-attachment: fixed; /* keep gradient fixed to avoid seams */
             -webkit-overflow-scrolling: touch;
             background-color: #1a0b2e; /* fallback solid color matching page */
+            
         }
         body {
             position: relative;

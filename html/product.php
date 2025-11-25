@@ -41,8 +41,6 @@
 
     <!-- Header -->
     <?php include 'header.html'; ?>
-
-    <!-- Back Button -->
 <!-- Back Button -->
 <div class="px-6 mx-auto mt-6 max-w-7xl">
     <button onclick="goBack()" class="inline-flex items-center gap-2 px-4 py-2 text-sm transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
