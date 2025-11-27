@@ -28,8 +28,6 @@
             <label class="text-sm">Password</label>
             <input type="password" class="w-full mt-1 p-3 rounded-lg bg-[#4b1fc6] placeholder-gray-300">
 
-            <a href="#" class="text-sm mt-2 inline-block hover:underline">Forgot password?</a>
-
             <button class="w-full mt-6 p-3 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 font-semibold">
                 Sign In
             </button>
@@ -38,7 +36,7 @@
                 <div class="grow border-t border-white/40"></div>
             </div>
 
-            <p class="mt-6 text-sm text-center">Don't have an account? <a href="regrister.php" class="underline">Sign Up Here</a></p>
+            <p class="mt-6 text-sm text-center">Belum punya akun? <a href="regrister.php" class="underline">Daftar Disini</a></p>
         </div>
     </div>
 
