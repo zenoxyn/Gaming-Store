@@ -142,8 +142,8 @@
   <div class="grid grid-cols-1 gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
     
     <!-- Step 1 -->
-    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg">
-      <div class="flex items-center justify-center w-16 h-16 mb-4 text-indigo-600 bg-indigo-100 rounded-full">
+    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg border-2 border-[#4C1D95]">
+      <div class="flex items-center justify-center w-16 h-16 mb-4 text-indigo-600 bg-indigo-100 rounded-full ">
         <i class="text-3xl ri-file-text-line"></i>
       </div>
       <h3 class="mb-2 font-semibold">Registration</h3>
@@ -151,7 +151,7 @@
     </div>
 
     <!-- Step 2 -->
-    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg">
+    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg border-2 border-[#4C1D95]">
       <div class="flex items-center justify-center w-16 h-16 mb-4 text-indigo-600 bg-indigo-100 rounded-full">
        <i class="text-3xl ri-bank-card-line"></i>
       </div>
@@ -160,7 +160,7 @@
     </div>
 
     <!-- Step 3 -->
-    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg">
+    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg border-2 border-[#4C1D95]">
       <div class="flex items-center justify-center w-16 h-16 mb-4 text-indigo-600 bg-indigo-100 rounded-full">
         <i class="text-3xl ri-mail-send-line"></i>
       </div>
@@ -169,7 +169,7 @@
     </div>
 
     <!-- Step 4 -->
-    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg">
+    <div class="flex flex-col items-center bg-[#2C1450] p-6 rounded-lg border-2 border-[#4C1D95]">
       <div class="flex items-center justify-center w-16 h-16 mb-4 text-indigo-600 bg-indigo-100 rounded-full">
         <i class="text-3xl ri-checkbox-line"></i>
       </div>
