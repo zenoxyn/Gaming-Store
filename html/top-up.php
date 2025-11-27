@@ -2,11 +2,155 @@
 <html lang="en">
 
 <head>
+<<<<<<< HEAD
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top-up & Services - ZEUSX.COM</title>
+    <link href="../css/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ✨ Loading Bar CSS (SAMA dengan product.php) -->
+    <style>
+        .back-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #8a2be2, #ff1493);
+            transform: scaleX(0);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.8);
+        }
+
+        .back-loading.active {
+            animation: loadBar 0.5s ease forwards;
+        }
+
+        @keyframes loadBar {
+            to { transform: scaleX(1); }
+        }
+
+        /* Loading Overlay untuk card click */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 11, 46, 0.98) 0%, rgba(45, 27, 78, 0.98) 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(138, 43, 226, 0.2);
+            border-top: 6px solid #8a2be2;
+            border-right: 6px solid #ff1493;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 24px;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(to right, #8a2be2, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .loading-dots {
+            display: inline-block;
+            margin-left: 4px;
+        }
+
+        .loading-dots span {
+            animation: blink 1.4s infinite both;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0; }
+            40% { opacity: 1; }
+        }
+
+        .loading-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+=======
     <?php include '../html/head.html'; ?>
     <title>Gaming Store - Top-up</title>
+>>>>>>> 17342e4e97572513ef07854aa52ccbc664524ff6
 </head>
 
 <body class="min-h-screen overflow-x-hidden text-white">
+    <!-- Loading Overlay Premium -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+        <div class="loading-icon"><i class="fa-solid fa-gamepad" style="color: #8a2be2;"></i></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+            Loading Product
+            <span class="loading-dots">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+            </span>
+        </div>
+    </div>
+</div>
 
     <!-- Header -->
     <?php include 'header.html'; ?>
@@ -16,7 +160,7 @@
         <div class="from-primary/30 to-secondary/30 rounded-3xl p-16 relative overflow-hidden min-h-[300px] flex items-center">
             <img src="https://cdn-game-photos.zeusx.com/4a28aae3-9f69-46e8-bccc-4215613ade0e.png" alt="" class="absolute top-0 left-0 object-cover w-full h-full opacity-80">
             <div class="z-10 max-w-xl">
-                <button onclick="history.back()" class="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm transition rounded-full cursor-pointer bg-white/20 hover:bg-white/30" aria-label="Kembali">
+                <button onclick="location.href= 'index.php'" class="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm transition rounded-full cursor-pointer bg-white/20 hover:bg-white/30" aria-label="Kembali">
                     <i class="fas fa-arrow-left"></i>
                     <span>Kembali</span>
                 </button>
@@ -413,6 +557,30 @@
         function createCard(product) {
             const card = document.createElement('div');
             card.className = 'bg-[#2d1b4e]/90 rounded-2xl overflow-hidden border-2 border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer';
+            // Di dalam createCard, bagian onclick:
+card.onclick = function() {
+    showLoading();
+    
+    setTimeout(function() {
+        window.location.href = 'product.php?title=' + encodeURIComponent(product.title) + 
+                               '&price=' + encodeURIComponent(product.price) + 
+                               '&seller=' + encodeURIComponent(product.seller) + 
+                               '&rating=' + encodeURIComponent(product.rating);
+    }, 1500); // Simulate loading delay
+};
+
+// Function untuk show/hide loading
+function showLoading() {
+    document.getElementById('loadingOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent scroll saat loading
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+            
             card.innerHTML = `
                 <div class="relative flex items-center justify-center text-5xl h-44 bg-gradient-to-br from-[#2d1b4e] to-purple-900">
                     ${product.icon}
