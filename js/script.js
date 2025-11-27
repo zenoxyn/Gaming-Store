@@ -5,3 +5,4 @@ setTimeout(() => {
   heroTitle.classList.add("transition", "duration-700", "ease-out");
 }, 300);
 
+
