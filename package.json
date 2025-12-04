@@ -1,27 +1,17 @@
 {
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.17"
-  },
-  "name": "gaming-store",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "devDependencies": {
-    "tailwindcss": "^4.1.17"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tailwindcss -i ./css/style.css -o ./css/output.css --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zenoxyn/Gaming-Store.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zenoxyn/Gaming-Store/issues"
-  },
-  "homepage": "https://github.com/zenoxyn/Gaming-Store#readme"
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.1.17",
+        "axios": "^1.11.0",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "tailwindcss": "^4.1.17",
+        "vite": "^7.0.7"
+    }
 }

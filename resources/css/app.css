@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-jost: "Jost", sans-serif;
+    --font-roboto: "Roboto", sans-serif;
+    --font-bbhsansbogle: "BBH Sans Bogle", sans-serif;
+    --font-bbhsanshegarty: "BBH Sans Hegarty", sans-serif;
+    --font-bbhsansbartle: "BBH Sans Bartle", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* stop horizontal dragging showing white edges */
+    background-attachment: fixed; /* keep gradient fixed to avoid seams */
+    -webkit-overflow-scrolling: touch;
+    background-color: #1a0b2e; /* fallback solid color matching page */
+}
+body {
+    position: relative;
+    background: linear-gradient(
+        to bottom right,
+        #1a0b2e 0%,
+        #2d1b4e 50%,
+        #1a0b2e 100%
+    );
+}
+.badge-new {
+    background: linear-gradient(to right, #8a2be2, #ff1493);
+}
+.badge-hot {
+    background: linear-gradient(to right, #8a2be2, #ff1493);
+}
+/* Hero entrance animation for controls */
+@keyframes heroIn {
+    from {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.animate-hero-in {
+    animation: heroIn 480ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+/* Improved hero control transitions and press feedback */
+.hero-control {
+    transition: background 220ms ease, color 220ms ease, transform 180ms ease,
+        box-shadow 220ms ease, border-color 220ms ease;
+    will-change: transform, box-shadow, background;
+}
+.hero-control[aria-pressed="true"] {
+    color: #ffffff;
+    border-color: rgba(138, 43, 226, 0.9);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(138, 43, 226, 0.18);
+}
+.hero-control.pressed {
+    transform: translateY(1px) scale(0.985) !important;
+    box-shadow: none !important;
+    transition-duration: 120ms;
+    opacity: 0.98;
+}
+.hero-control:focus {
+    outline: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.badge-new,
+.badge-hot {
+    color: #fff;
+}
+
+/* Login Page Animations */
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+.glass-effect {
+    background: rgba(42, 12, 163, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-glow:focus {
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+}
+
+.bg-image-dim::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../image/cat-1.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+}
+
+. {
+    @apply font-['Jost'];
+}
+
+body {
+    @apply bg-[#0D0321];
+}
+
+.warna-text {
+    @apply text-[#C4C1EA];
+}
+
+/* Loading Screen Full Page */
+
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.page-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(138, 43, 226, 0.2);
+    border-top-color: #8a2be2;
+    border-right-color: #ff1493;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.loader-text {
+    position: absolute;
+    margin-top: 100px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
