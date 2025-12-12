@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_seller')->constrained('sellers')->onDelete('cascade');
             $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
             $table->string('name_product', 100);
+            $table->string('slug', 150)->unique();
             $table->enum('type_product', ['account', 'topup', 'ingame_item']);
             $table->text('description');
             $table->bigInteger('price');

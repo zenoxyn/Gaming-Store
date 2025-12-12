@@ -19,12 +19,18 @@
                         </span>
                     @endif
                 </div>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition">
-                        Logout
-                    </button>
-                </form>
+                <div class="flex gap-3">
+                    <a href="{{ route('buyer.dashboard') }}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition flex items-center gap-2">
+                        <span>🛒</span>
+                        <span>Buyer Dashboard</span>
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition">
+                            Logout
+                        </button>
+                    </form>
+                </div>
             </div>
 
             <!-- Stats Cards -->

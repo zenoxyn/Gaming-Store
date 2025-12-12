@@ -89,11 +89,11 @@
                         <span class="text-2xl mb-2">👥</span>
                         <span class="text-sm">Manage Users</span>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center p-4 bg-blue-600 hover:bg-blue-700 rounded-lg transition">
+                    <a href="{{ route('admin.sellers.verification') }}" class="flex flex-col items-center justify-center p-4 bg-blue-600 hover:bg-blue-700 rounded-lg transition">
                         <span class="text-2xl mb-2">✅</span>
                         <span class="text-sm">Verify Sellers</span>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center p-4 bg-green-600 hover:bg-green-700 rounded-lg transition">
+                    <a href="{{ route('admin.products.index') }}" class="flex flex-col items-center justify-center p-4 bg-green-600 hover:bg-green-700 rounded-lg transition">
                         <span class="text-2xl mb-2">📦</span>
                         <span class="text-sm">Manage Products</span>
                     </a>
@@ -131,12 +131,18 @@
                                     <p class="text-sm text-gray-400 mt-2">Phone: {{ $seller->user->phone }}</p>
                                     <p class="text-sm text-gray-400">Registered: {{ $seller->created_at->format('d M Y') }}</p>
                                     <div class="flex gap-2 mt-3">
-                                        <button class="flex-1 px-3 py-2 bg-green-600 hover:bg-green-700 rounded text-sm transition">
-                                            Approve
-                                        </button>
-                                        <button class="flex-1 px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm transition">
-                                            Reject
-                                        </button>
+                                        <form action="{{ route('admin.sellers.approve', $seller->id) }}" method="POST" class="flex-1">
+                                            @csrf
+                                            <button type="submit" onclick="return confirm('Approve this seller?')" class="w-full px-3 py-2 bg-green-600 hover:bg-green-700 rounded text-sm transition">
+                                                Approve
+                                            </button>
+                                        </form>
+                                        <form action="{{ route('admin.sellers.reject', $seller->id) }}" method="POST" class="flex-1">
+                                            @csrf
+                                            <button type="submit" onclick="return confirm('Reject this seller?')" class="w-full px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm transition">
+                                                Reject
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             @endforeach

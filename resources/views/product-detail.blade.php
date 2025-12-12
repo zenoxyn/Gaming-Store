@@ -354,7 +354,7 @@
 
         <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
             @forelse($relatedProducts as $related)
-            <a href="{{ route('product.show', $related->id) }}" class="overflow-hidden transition border cursor-pointer rounded-xl bg-[#2d1b4e]/90 border-[#8a2be2]/20 hover:border-[#8a2be2] hover:-translate-y-1">
+            <a href="{{ route('product.show', $related->slug) }}" class="overflow-hidden transition border cursor-pointer rounded-xl bg-[#2d1b4e]/90 border-[#8a2be2]/20 hover:border-[#8a2be2] hover:-translate-y-1">
                 @php
                     $relatedImages = is_array($related->images) ? $related->images : [];
                 @endphp

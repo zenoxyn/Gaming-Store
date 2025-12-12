@@ -25,7 +25,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-300">Product Name *</label>
                             <input type="text" name="name_product" value="{{ old('name_product') }}" required
-                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none"
+                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none placeholder:text-gray-500/50"
                                    placeholder="e.g., Genshin Impact AR55 Account">
                             @error('name_product')
                                 <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
@@ -69,7 +69,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-300">Description *</label>
                             <textarea name="description" rows="4" required
-                                      class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none"
+                                      class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none placeholder:text-gray-500/50"
                                       placeholder="Detailed description of your product...">{{ old('description') }}</textarea>
                             @error('description')
                                 <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
@@ -86,7 +86,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-300">Price (Rp) *</label>
                             <input type="number" name="price" id="priceInput" value="{{ old('price') }}" required min="0" step="1000"
-                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none"
+                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none placeholder:text-gray-500/50"
                                    placeholder="50000" onkeyup="calculateFinalPrice()">
                             @error('price')
                                 <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
@@ -96,7 +96,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-300">Discount Price (Rp)</label>
                             <input type="number" name="discount_price" id="discountInput" value="{{ old('discount_price') }}" min="0" step="1000"
-                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none"
+                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none placeholder:text-gray-500/50"
                                    placeholder="45000" onkeyup="calculateFinalPrice()">
                             <p class="mt-1 text-xs text-gray-500">Optional discount price</p>
                             @error('discount_price')
@@ -107,7 +107,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-300">Stock *</label>
                             <input type="number" name="stock" value="{{ old('stock', 1) }}" required min="0"
-                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none"
+                                   class="w-full px-4 py-3 text-white border rounded-lg bg-[#1a0b2e] border-[#8a2be2]/30 focus:border-[#8a2be2] focus:outline-none "
                                    placeholder="1">
                             @error('stock')
                                 <p class="mt-1 text-sm text-red-400">{{ $message }}</p>

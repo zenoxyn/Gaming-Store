@@ -96,7 +96,7 @@
     <!-- Products Grid -->
     <section class="grid grid-cols-5 gap-5 px-5 mx-auto mt-8 max-w-7xl" id="productsGrid">
         @forelse($products as $product)
-            <a href="{{ route('product.show', $product->id) }}" class="bg-[#2d1b4e]/90 rounded-2xl overflow-hidden border-2 border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
+            <a href="{{ route('product.show', $product->slug) }}" class="bg-[#2d1b4e]/90 rounded-2xl overflow-hidden border-2 border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
                data-price="{{ $product->getCurrentPrice() }}"
                data-created="{{ $product->created_at->timestamp }}"
                data-popularity="{{ $product->averageRating() * 100 }}">

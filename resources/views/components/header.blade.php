@@ -16,9 +16,19 @@
     <!-- Right Side -->
     <div class="flex items-center space-x-4">
       @auth
-        <a href="#" class="bg-purple-500 text-white px-4 py-3 rounded-xl hover:bg-purple-800 text-sm font-semibold">
-          Sell Item
-        </a>
+        @if(auth()->user()->role_user === 'seller' && auth()->user()->seller && auth()->user()->seller->verification_status === 'verified')
+          <a href="{{ route('seller.products.create') }}" class="bg-purple-500 text-white px-4 py-3 rounded-xl hover:bg-purple-800 text-sm font-semibold">
+            Sell Item
+          </a>
+        @elseif(auth()->user()->seller && auth()->user()->seller->verification_status === 'pending')
+          <span class="bg-yellow-600/20 border border-yellow-600 text-yellow-400 px-4 py-3 rounded-xl text-sm font-semibold cursor-not-allowed">
+            Pending Verification
+          </span>
+        @else
+          <a href="{{ route('seller.apply') }}" class="bg-purple-500 text-white px-4 py-3 rounded-xl hover:bg-purple-800 text-sm font-semibold">
+            Sell Item
+          </a>
+        @endif
         <a href="#" class="px-2 py-1.5 m-1 rounded-xl hover:bg-purple-600/20 transition">
           <i class="ri-message-2-line text-2xl"></i>
         </a>

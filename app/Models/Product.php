@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -10,6 +11,7 @@ class Product extends Model
         'id_seller',
         'id_category',
         'name_product',
+        'slug',
         'type_product',
         'description',
         'price',
@@ -29,6 +31,39 @@ class Product extends Model
             'images' => 'array',
             'product_details' => 'array',
         ];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($product) {
+            if (empty($product->slug)) {
+                $slug = Str::slug($product->name_product);
+                $count = 1;
+                $originalSlug = $slug;
+
+                while (static::where('slug', $slug)->exists()) {
+                    $slug = $originalSlug . '-' . $count++;
+                }
+
+                $product->slug = $slug;
+            }
+        });
+
+        static::updating(function ($product) {
+            if ($product->isDirty('name_product') && empty($product->slug)) {
+                $slug = Str::slug($product->name_product);
+                $count = 1;
+                $originalSlug = $slug;
+
+                while (static::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+                    $slug = $originalSlug . '-' . $count++;
+                }
+
+                $product->slug = $slug;
+            }
+        });
     }
 
     // Relationships
@@ -92,22 +127,22 @@ class Product extends Model
         if (!$this->product_details) return [];
 
         $details = is_array($this->product_details) ? $this->product_details : json_decode($this->product_details, true);
-        
+
         // Get spec template from category
         $template = $this->category->spec_template ?? [];
-        
+
         $formatted = [];
         foreach ($details as $key => $value) {
             // Find label from category template first, fallback to default labels
             $label = null;
-            
+
             foreach ($template as $field) {
                 if ($field['key'] === $key) {
                     $label = $field['label'];
                     break;
                 }
             }
-            
+
             // Fallback to generic labels if not in template
             if (!$label) {
                 $defaultLabels = [
@@ -136,7 +171,7 @@ class Product extends Model
                 ];
                 $label = $defaultLabels[$key] ?? ucwords(str_replace('_', ' ', $key));
             }
-            
+
             // Format value
             if (is_array($value)) {
                 $value = implode(', ', $value);

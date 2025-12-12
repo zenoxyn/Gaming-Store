@@ -64,10 +64,11 @@ class ProductController extends Controller
     }
 
     // Product detail page
-    public function show($id)
+    public function show($slug)
     {
         $product = Product::with(['seller.user', 'category'])
-            ->findOrFail($id);
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         // Get seller reviews
         $sellerReviews = $product->seller->user->sellerReviews()
