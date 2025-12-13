@@ -325,7 +325,7 @@
                             {{ $product->name_product }}
                         </p>
                         <div class="flex items-baseline gap-3">
-                            <div class="text-2xl font-bold text-yellow-400">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
+                            <div class="text-2xl font-bold text-yellow-400" id="desktopTotalPrice">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
                             @if($product->discount_price && $product->discount_price < $product->price)
                                 <div class="text-base text-gray-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
                                 <div class="px-2 py-1 text-xs font-bold rounded bg-red-600">-{{ round((($product->price - $product->discount_price) / $product->price) * 100) }}%</div>
@@ -337,7 +337,7 @@
                     <div class="px-6 pb-6">
                         <div class="flex items-center gap-3 mb-4">
                             <!-- Quantity -->
-                            <div class="flex items-center border-2 rounded-lg border-[#8a2be2]/30">
+                            <div class="flex-1 items-center border-2 rounded-lg border-[#8a2be2]/30">
                                 <button onclick="decreaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
                                     <i class="fas fa-minus"></i>
                                 </button>
@@ -352,10 +352,6 @@
                                 Buy Now
                             </button>
                         </div>
-
-                        <button onclick="addToCart()" class="w-full py-3 font-semibold transition border rounded-lg cursor-pointer border-[#8a2be2]/40 hover:bg-white/5">
-                            Add to Cart
-                        </button>
 
                         {{-- Negotiate Button (Only for buyers, not sellers viewing their own product) --}}
                         @auth
@@ -447,16 +443,29 @@
         <div class="flex items-center gap-3">
             <div class="flex flex-col">
                 <div class="text-[10px] text-gray-400">Total Price</div>
-                <div class="text-lg font-bold text-yellow-400">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
+                <div class="text-lg font-bold text-yellow-400" id="mobileTotalPrice">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
             </div>
-            <div class="flex flex-1 gap-2">
-                <button onclick="addToCart()" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold transition border rounded-xl cursor-pointer border-[#8a2be2]/50 bg-[#8a2be2]/30 hover:bg-[#8a2be2]/40">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="text-sm">Cart</span>
+
+            <!-- Quantity Controls -->
+            <div class="flex items-center border-2 rounded-lg border-[#8a2be2]/30">
+                <button onclick="decreaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
+                    <i class="fas fa-minus text-xs"></i>
                 </button>
+                <input type="number" id="mobileQuantity" value="1" min="1" max="{{ $product->stock }}" readonly
+                    class="flex-1 text-center bg-transparent text-white font-semibold border-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                <button onclick="increaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
+                    <i class="fas fa-plus text-xs"></i>
+                </button>
+            </div>
+
+            <div class="flex flex-1 gap-2">
+                <a href="{{ route('negotiation.create', $product->id) }}" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold transition border rounded-xl cursor-pointer border-[#8a2be2]/50 bg-[#8a2be2]/30 hover:bg-[#8a2be2]/40">
+                    <i class="ri-discuss-line"></i>
+                    <span class="text-sm">Nego</span>
+                </a>
                 <button onclick="buyNow()" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold text-white transition rounded-xl cursor-pointer bg-linear-to-r from-[#8a2be2] to-[#ff1493] hover:opacity-90">
                     <i class="fas fa-bolt"></i>
-                    <span class="text-sm">Buy Now</span>
+                    <span class="text-sm">Buy</span>
                 </button>
             </div>
         </div>
@@ -572,7 +581,29 @@
         }
 
         function updateQuantityDisplay() {
+            const basePrice = {{ $product->getCurrentPrice() }};
+            const totalPrice = basePrice * quantity;
+
+            // Update desktop quantity display
             document.getElementById('quantity').textContent = quantity;
+
+            // Update desktop total price
+            const desktopTotalPrice = document.getElementById('desktopTotalPrice');
+            if (desktopTotalPrice) {
+                desktopTotalPrice.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
+            }
+
+            // Update mobile quantity if element exists
+            const mobileQuantity = document.getElementById('mobileQuantity');
+            if (mobileQuantity) {
+                mobileQuantity.value = quantity;
+
+                // Update mobile total price
+                const mobileTotalPrice = document.getElementById('mobileTotalPrice');
+                if (mobileTotalPrice) {
+                    mobileTotalPrice.textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
+                }
+            }
         }
 
         // Buy and Cart Functions
