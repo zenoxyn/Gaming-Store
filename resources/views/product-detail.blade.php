@@ -9,8 +9,18 @@
     </div>
 
 
-    <!-- Back Button -->
-    <div class="px-6 mx-auto mt-6 max-w-7xl">
+    <!-- Mobile Sticky Header -->
+    <div class="sticky top-0 z-50 px-4 py-3 border-b lg:hidden bg-[#2d1b4e]/95 backdrop-blur-lg border-[#8a2be2]/30">
+        <div class="flex items-center gap-3">
+            <button onclick="goBack()" class="flex items-center justify-center w-10 h-10 transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="flex-1 text-base font-semibold truncate">Product Detail</div>
+        </div>
+    </div>
+
+    <!-- Desktop Back Button -->
+    <div class="hidden px-6 mx-auto mt-6 max-w-7xl lg:block">
         <button onclick="goBack()" class="inline-flex items-center gap-2 px-4 py-2 text-sm transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
             <i class="fas fa-arrow-left"></i>
             <span>Back</span>
@@ -18,7 +28,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="grid grid-cols-1 gap-8 px-6 mx-auto mt-8 max-w-7xl lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 px-4 mx-auto mt-4 lg:gap-8 lg:px-6 lg:mt-8 max-w-7xl lg:grid-cols-3 pb-24 lg:pb-8">
 
         <!-- Left Column - Product Details -->
         <div class="lg:col-span-2">
@@ -27,38 +37,99 @@
             @php
                 $productImages = is_array($product->images) ? $product->images : [];
             @endphp
-            <div class="relative overflow-hidden rounded-2xl h-96 {{ empty($productImages) ? 'bg-linear-to-br from-[#2d1b4e] to-purple-900' : 'bg-black' }}">
+            <div class="relative overflow-hidden rounded-2xl h-80 lg:h-96 {{ empty($productImages) ? 'bg-linear-to-br from-[#2d1b4e] to-purple-900' : 'bg-black' }}">
                 @if(!empty($productImages))
                     <img src="{{ asset('storage/' . $productImages[0]) }}"
                          alt="{{ $product->name_product }}"
                          class="object-cover w-full h-full">
                 @else
-                    <div class="flex items-center justify-center w-full h-full text-8xl">
+                    <div class="flex items-center justify-center w-full h-full text-6xl lg:text-8xl">
                         🎮
                     </div>
                     <div class="absolute inset-0 bg-linear-to-t from-black/80 to-transparent"></div>
                 @endif
 
-
                 <!-- Share & Like Buttons -->
-                <div class="absolute flex gap-2 top-4 right-4">
-                    <button onclick="shareProduct()" class="p-4 transition rounded-full cursor-pointer bg-black/50 hover:bg-black/70">
+                <div class="absolute flex flex-col gap-2 top-4 right-4">
+                    <button onclick="shareProduct()" class="flex items-center justify-center w-11 h-11 transition rounded-full cursor-pointer bg-black/60 hover:bg-black/70 backdrop-blur-sm">
                         <i class="fas fa-share-alt"></i>
                     </button>
-                    <button onclick="toggleLike(this)" class="p-2 transition rounded-full cursor-pointer bg-black/50 hover:bg-black/70">
+                    <button onclick="toggleLike(this)" class="flex items-center justify-center w-11 h-11 transition rounded-full cursor-pointer bg-black/60 hover:bg-black/70 backdrop-blur-sm">
                         <i class="far fa-heart"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Description Section -->
-            <div class="p-6 mt-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
-                <div class="flex items-center gap-2 mb-4">
-                    <i class="text-xl fas fa-file-alt text-[#8a2be2]"></i>
-                    <h3 class="text-xl font-bold">Description</h3>
+            <!-- Mobile Seller & Product Card -->
+            <div class="block mt-4 space-y-4 lg:hidden">
+                <!-- Seller Card Mobile -->
+                <div class="p-4 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="relative">
+                            <div class="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-linear-to-br from-[#8a2be2] to-[#ff1493]">
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($product->seller->user->username) }}&background=8a2be2&color=fff"
+                                     alt="{{ $product->seller->user->username }}"
+                                     class="object-cover w-full h-full">
+                            </div>
+                            @if($product->seller->user->is_online ?? false)
+                                <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 border-2 rounded-full border-[#2d1b4e]"></div>
+                            @endif
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-semibold text-white">{{ $product->seller->user->username }}</h5>
+                            <div class="flex items-center gap-3 text-xs">
+                                @if($product->seller->user->is_online ?? false)
+                                    <span class="flex items-center gap-1 text-green-400">
+                                        <div class="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                                        Active Now
+                                    </span>
+                                @else
+                                    <span class="flex items-center gap-1 text-gray-400">
+                                        <div class="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                                        Offline
+                                    </span>
+                                @endif
+                                <span class="flex items-center gap-1 text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <span class="font-semibold">{{ number_format($product->seller->rating, 1) }}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="openChat()" class="w-full py-3 font-semibold transition border rounded-xl cursor-pointer border-[#8a2be2]/40 bg-[#8a2be2]/20 hover:bg-[#8a2be2]/30 flex items-center justify-center gap-2">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Chat With Seller</span>
+                    </button>
                 </div>
 
-                <div class="space-y-4 text-sm leading-relaxed text-gray-300">
+                <!-- Product Info Mobile -->
+                <div class="p-4 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                    <h1 class="mb-3 text-lg font-semibold leading-tight">{{ $product->name_product }}</h1>
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="text-2xl font-bold text-yellow-400">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
+                        @if($product->discount_price && $product->discount_price < $product->price)
+                            <div class="text-sm text-gray-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
+                            <div class="px-2 py-1 text-xs font-bold rounded bg-red-600">-{{ round((($product->price - $product->discount_price) / $product->price) * 100) }}%</div>
+                        @endif
+                    </div>
+                    <div class="flex items-center justify-between px-3 py-2 border rounded-xl bg-green-400/10 border-green-400/30">
+                        <span class="text-sm"><i class="mr-2 text-green-400 fas fa-check-circle"></i>In Stock: {{ $product->stock }} items</span>
+                        <span class="text-sm font-semibold text-green-400">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="p-4 mt-4 border lg:p-6 lg:mt-6 rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                <div class="flex items-center justify-between gap-2 mb-4 cursor-pointer lg:cursor-default" onclick="toggleMobileSection(this)">
+                    <div class="flex items-center gap-2">
+                        <i class="text-lg lg:text-xl fas fa-file-alt text-[#8a2be2]"></i>
+                        <h3 class="text-base font-bold lg:text-xl">Description</h3>
+                    </div>
+                    <i class="transition-transform fas fa-chevron-down lg:hidden text-[#8a2be2]"></i>
+                </div>
+
+                <div class="space-y-4 text-sm leading-relaxed text-gray-300 mobile-collapsible">
                     <div class="whitespace-pre-wrap">{{ $product->description }}</div>
 
                     <div class="p-4 mt-4 border-l-4 border-yellow-400 rounded bg-yellow-400/10">
@@ -72,32 +143,44 @@
 
             <!-- Specifications -->
             @if($product->product_details && count($product->getFormattedSpecs()) > 0)
-            <div class="p-6 mt-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
-                <div class="flex items-center gap-2 mb-4">
-                    <i class="text-xl fas fa-list text-[#8a2be2]"></i>
-                    <h3 class="text-xl font-bold">Specifications</h3>
+            <div class="p-4 mt-4 border lg:p-6 lg:mt-6 rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                <div class="flex items-center justify-between gap-2 mb-4 cursor-pointer lg:cursor-default" onclick="toggleMobileSection(this)">
+                    <div class="flex items-center gap-2">
+                        <i class="text-lg lg:text-xl fas fa-list text-[#8a2be2]"></i>
+                        <h3 class="text-base font-bold lg:text-xl">Specifications</h3>
+                    </div>
+                    <i class="transition-transform fas fa-chevron-down lg:hidden text-[#8a2be2]"></i>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    @foreach($product->getFormattedSpecs() as $spec)
-                    <div class="p-4 rounded-lg bg-white/5">
+                <div class="mobile-collapsible">
+
+                    <div class="grid grid-cols-2 gap-3 lg:gap-4">
+                        @foreach($product->getFormattedSpecs() as $spec)
+                        <div class="p-3 lg:p-4 rounded-lg bg-white/5">
                         <div class="mb-1 text-xs text-gray-400">{{ $spec['label'] }}</div>
                         <div class="font-semibold {{ in_array($spec['label'], ['Email Status', 'Delivery Time']) ? 'text-green-400' : '' }}">
                             {{ $spec['value'] }}
                         </div>
                     </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
             @endif
 
             <!-- Seller Reviews -->
-            <div class="p-6 mt-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
-                <div class="flex items-center justify-between mb-6">
+            <div class="p-4 mt-4 border lg:p-6 lg:mt-6 rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                <div class="flex items-center justify-between mb-4 cursor-pointer lg:mb-6 lg:cursor-default" onclick="toggleMobileSection(this)">
                     <div class="flex items-center gap-2">
-                        <i class="text-xl fas fa-star text-[#8a2be2]"></i>
-                        <h3 class="text-xl font-bold">Seller Reviews</h3>
+                        <i class="text-lg lg:text-xl fas fa-star text-[#8a2be2]"></i>
+                        <h3 class="text-base font-bold lg:text-xl">Seller Reviews</h3>
+                        <span class="text-lg font-bold text-yellow-400 lg:hidden">{{ number_format($product->seller->rating, 1) }}</span>
                     </div>
+                    <i class="transition-transform fas fa-chevron-down lg:hidden text-[#8a2be2]"></i>
+                </div>
+
+                <div class="mobile-collapsible">
+                    <div class="items-center hidden gap-2 mb-6 lg:flex">
                     <div class="flex items-center gap-2">
                         <span class="text-2xl font-bold text-yellow-400">{{ number_format($product->seller->rating, 1) }}</span>
                         <div class="flex gap-1 text-yellow-400">
@@ -183,17 +266,18 @@
                     @endif
                 </div>
 
-                @if($sellerReviews->count() > 3)
-                <button onclick="toggleReviews()" id="showMoreBtn" class="w-full py-3 mt-4 font-semibold transition border rounded-lg cursor-pointer border-[#8a2be2]/40 bg-[#8a2be2]/20 hover:bg-[#8a2be2]/30">
-                    Show More Reviews
-                </button>
-                @endif
+                    @if($sellerReviews->count() > 3)
+                    <button onclick="toggleReviews()" id="showMoreBtn" class="w-full py-3 mt-4 font-semibold transition border rounded-lg cursor-pointer border-[#8a2be2]/40 bg-[#8a2be2]/20 hover:bg-[#8a2be2]/30">
+                        Show More Reviews
+                    </button>
+                    @endif
+                </div>
             </div>
 
         </div>
 
-        <!-- Right Column - Sidebar -->
-        <div class="lg:col-span-1">
+        <!-- Right Column - Sidebar (Desktop Only) -->
+        <div class="hidden lg:block lg:col-span-1">
             <div class="sticky top-4">
 
                 <!-- Purchase Card -->
@@ -358,11 +442,36 @@
         </div>
     </div>
 
-    <!-- Similar Items -->
-    <div class="px-6 mx-auto mt-16 mb-16 max-w-7xl">
-        <h2 class="mb-6 text-2xl font-bold">Similar Items You May Like</h2>
+    <!-- Mobile Fixed Bottom Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 px-4 py-3 border-t lg:hidden bg-[#2d1b4e]/98 backdrop-blur-lg border-[#8a2be2]/30 shadow-2xl">
+        <div class="flex items-center gap-3">
+            <div class="flex flex-col">
+                <div class="text-[10px] text-gray-400">Total Price</div>
+                <div class="text-lg font-bold text-yellow-400">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
+            </div>
+            <div class="flex flex-1 gap-2">
+                <button onclick="addToCart()" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold transition border rounded-xl cursor-pointer border-[#8a2be2]/50 bg-[#8a2be2]/30 hover:bg-[#8a2be2]/40">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="text-sm">Cart</span>
+                </button>
+                <button onclick="buyNow()" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold text-white transition rounded-xl cursor-pointer bg-linear-to-r from-[#8a2be2] to-[#ff1493] hover:opacity-90">
+                    <i class="fas fa-bolt"></i>
+                    <span class="text-sm">Buy Now</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+    <!-- Floating Chat Button (Mobile) -->
+    <button onclick="openChat()" class="fixed z-30 flex items-center justify-center w-14 h-14 text-2xl text-white transition shadow-2xl rounded-full lg:hidden bottom-24 right-4 bg-linear-to-br from-[#8a2be2] to-[#ff1493] hover:scale-110 active:scale-95">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- Similar Items -->
+    <div class="px-4 mx-auto mt-8 mb-8 lg:px-6 lg:mt-16 lg:mb-16 max-w-7xl">
+        <h2 class="mb-4 text-xl font-bold lg:mb-6 lg:text-2xl">Similar Items You May Like</h2>
+
+        <div class="grid grid-cols-2 gap-3 lg:gap-6 md:grid-cols-4">
             @forelse($relatedProducts as $related)
             <a href="{{ route('product.show', $related->slug) }}" class="overflow-hidden transition border cursor-pointer rounded-xl bg-[#2d1b4e]/90 border-[#8a2be2]/20 hover:border-[#8a2be2] hover:-translate-y-1">
                 @php
@@ -411,6 +520,25 @@
     let quantity = 1;
     let isLiked = false;
     let showingAllReviews = false;
+
+    // Mobile Section Toggle
+    function toggleMobileSection(header) {
+        if (window.innerWidth >= 1024) return; // Only work on mobile
+
+        const icon = header.querySelector('.fa-chevron-down');
+        const content = header.nextElementSibling;
+
+        if (icon && content) {
+            icon.classList.toggle('rotate-180');
+            content.classList.toggle('hidden');
+        }
+    }
+
+    // Open Chat
+    function openChat() {
+        alert('Opening chat with seller...');
+        // Implement chat functionality here
+    }
 
     // ✨ Hide loading screen when page loaded
     window.addEventListener('load', function() {

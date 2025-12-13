@@ -66,8 +66,15 @@ class ProductController extends Controller
     // Product detail page
     public function show($slug)
     {
+        // Support both ID and slug
         $product = Product::with(['seller.user', 'category'])
-            ->where('slug', $slug)
+            ->where(function($query) use ($slug) {
+                if (is_numeric($slug)) {
+                    $query->where('id', $slug);
+                } else {
+                    $query->where('slug', $slug);
+                }
+            })
             ->firstOrFail();
 
         // Get seller reviews
