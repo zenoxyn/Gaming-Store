@@ -6,11 +6,19 @@
 @source '../**/*.js';
 
 @theme {
+    /* Font Families */
     --font-jost: "Jost", sans-serif;
     --font-roboto: "Roboto", sans-serif;
     --font-bbhsansbogle: "BBH Sans Bogle", sans-serif;
     --font-bbhsanshegarty: "BBH Sans Hegarty", sans-serif;
     --font-bbhsansbartle: "BBH Sans Bartle", sans-serif;
+
+    /* Responsive Breakpoints */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
 }
 
 html,
@@ -128,10 +136,6 @@ body {
     background-size: cover;
     background-position: center;
     opacity: 0.5;
-}
-
-. {
-    @apply font-['Jost'];
 }
 
 body {

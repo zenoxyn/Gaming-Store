@@ -151,9 +151,9 @@
     </section>
 
     <!-- Products Grid -->
-    <section class="grid grid-cols-5 gap-5 px-5 mx-auto mt-4 lg:grid-cols-5 lg:gap-5 lg:px-5 lg:mt-8 max-w-7xl" id="productsGrid">
+    <section class="grid grid-cols-2 gap-3 px-4 mx-auto mt-4 lg:grid-cols-5 lg:gap-5 lg:px-5 lg:mt-8 max-w-7xl" id="productsGrid">
         @forelse($products as $product)
-            <a href="{{ route('product.show', $product->id) }}" class="bg-[#2d1b4e]/90 rounded-xl lg:rounded-2xl overflow-hidden border border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
+            <a href="{{ route('product.show', $product->slug) }}" class="bg-[#2d1b4e]/90 rounded-xl lg:rounded-2xl overflow-hidden border border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
                data-price="{{ $product->getCurrentPrice() }}"
                data-created="{{ $product->created_at->timestamp }}"
                data-popularity="{{ $product->averageRating() * 100 }}">
@@ -208,7 +208,7 @@
     </section>
 
     <!-- Pagination -->
-    <div class="flex justify-center gap-3 px-5 mx-auto mt-10 max-w-7xl">
+    <div class="flex justify-center gap-3 px-4 mx-auto mt-10 lg:px-5 max-w-7xl">
         {{ $products->links() }}
     </div>
 
@@ -218,9 +218,9 @@
     </h2>
 
     <!-- Game Categories -->
-    <section class="px-5 mx-auto mt-8 lg:px-5 lg:mt-12 max-w-7xl">
+    <section class="px-4 mx-auto mt-8 lg:px-5 lg:mt-12 max-w-7xl">
         <h2 class="mb-5 text-xl font-bold lg:mb-5 lg:text-2xl">Browse by Game</h2>
-        <div class="grid grid-cols-5 gap-5 lg:grid-cols-5 lg:gap-4">
+        <div class="grid grid-cols-3 gap-3 lg:grid-cols-5 lg:gap-4">
             @foreach($categories as $cat)
                 <a href="{{ route('products.category', $cat->slug) }}" class="relative block overflow-hidden rounded-lg lg:rounded-xl group aspect-square transition-all border {{ isset($category) && $category->id == $cat->id ? 'border-[#8a2be2]' : 'border-[#8a2be2]/20' }} hover:border-[#8a2be2]">
                     @if($cat->icon)
