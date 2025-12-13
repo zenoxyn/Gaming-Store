@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug', 100)->unique();
             $table->string('icon')->nullable();
             $table->text('description')->nullable();
+            $table->json('spec_template')->nullable();
             $table->timestamps();
         });
     }

@@ -50,4 +50,24 @@ class Wallet extends Model
     {
         return $this->addBalance(-$amount, $type, $description, $orderId);
     }
+
+    public function holdDeposit($amount, $description = null)
+    {
+        return $this->deductBalance($amount, 'deposit_hold', $description);
+    }
+
+    public function releaseDeposit($amount, $description = null)
+    {
+        return $this->addBalance($amount, 'deposit_release', $description);
+    }
+
+    public function receivePenalty($amount, $description = null)
+    {
+        return $this->addBalance($amount, 'penalty', $description);
+    }
+
+    public function hasBalance($amount)
+    {
+        return $this->balance >= $amount;
+    }
 }

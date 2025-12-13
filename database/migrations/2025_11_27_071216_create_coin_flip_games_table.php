@@ -22,6 +22,9 @@ return new class extends Migration
             $table->enum('result', ['heads', 'tails', 'pending'])->default('pending');
             $table->enum('winner', ['buyer', 'seller'])->nullable();
             $table->bigInteger('final_price')->nullable();
+            $table->timestamp('payment_deadline')->nullable();
+            $table->boolean('buyer_paid')->default(false);
+            $table->boolean('penalty_distributed')->default(false);
             $table->enum('game_status', ['waiting_dp', 'playing', 'finished', 'canceled'])->default('waiting_dp');
             $table->timestamp('played_at')->nullable();
             $table->timestamps();

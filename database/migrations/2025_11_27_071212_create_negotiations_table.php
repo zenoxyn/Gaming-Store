@@ -16,7 +16,11 @@ return new class extends Migration
             $table->foreignId('id_product')->constrained('products')->onDelete('cascade');
             $table->foreignId('id_buyer')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_seller')->constrained('users')->onDelete('cascade');
+            $table->bigInteger('latest_buyer_offer')->nullable();
+            $table->bigInteger('latest_seller_offer')->nullable();
             $table->enum('status', ['ongoing', 'accepted', 'rejected', 'coinflip', 'expired'])->default('ongoing');
+            $table->timestamp('expires_at')->nullable();
+            $table->foreignId('coinflip_proposed_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

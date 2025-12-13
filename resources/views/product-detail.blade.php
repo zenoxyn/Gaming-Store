@@ -272,6 +272,16 @@
                         <button onclick="addToCart()" class="w-full py-3 font-semibold transition border rounded-lg cursor-pointer border-[#8a2be2]/40 hover:bg-white/5">
                             Add to Cart
                         </button>
+
+                        {{-- Negotiate Button (Only for buyers, not sellers viewing their own product) --}}
+                        @auth
+                            @if(auth()->user()->canBuy() && $product->id_seller !== auth()->id() && $product->status === 'available')
+                                <a href="{{ route('negotiation.create', $product->id) }}"
+                                   class="block w-full py-3 mt-3 font-semibold text-center transition border rounded-lg border-yellow-500/40 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400">
+                                    <i class="ri-chat-3-line mr-2"></i>Negotiate Price
+                                </a>
+                            @endif
+                        @endauth
                     </div>
 
                     <!-- ZeusX Guarantee -->

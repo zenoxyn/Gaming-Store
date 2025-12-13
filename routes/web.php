@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\NegotiationController;
+use App\Http\Controllers\CoinFlipController;
 use App\Http\Controllers\Seller\ApplicationController;
 use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -36,6 +39,9 @@ Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product
 // Search
 Route::get('/search', [ProductController::class, 'search'])->name('products.search');
 
+// Midtrans Callback (No auth - called by Midtrans server)
+Route::post('/wallet/callback', [WalletController::class, 'callback'])->name('wallet.callback');
+
 // Testing Routes
 Route::get('/test', [TestController::class, 'index']);
 Route::get('/api/test/categories', [TestController::class, 'categories']);
@@ -54,6 +60,32 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+    // Wallet Routes (All authenticated users)
+    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
+    Route::get('/wallet/topup', [WalletController::class, 'topup'])->name('wallet.topup');
+    Route::post('/wallet/topup/process', [WalletController::class, 'processTopup'])->name('wallet.topup.process');
+    Route::get('/wallet/success', [WalletController::class, 'success'])->name('wallet.success');
+    Route::get('/wallet/pending', [WalletController::class, 'pending'])->name('wallet.pending');
+    Route::get('/wallet/error', [WalletController::class, 'error'])->name('wallet.error');
+
+    // Negotiation Routes
+    Route::get('/negotiations', [NegotiationController::class, 'index'])->name('negotiation.index');
+    Route::get('/negotiations/{id}', [NegotiationController::class, 'show'])->name('negotiation.show');
+    Route::get('/product/{productId}/negotiate', [NegotiationController::class, 'create'])->name('negotiation.create');
+    Route::post('/product/{productId}/negotiate', [NegotiationController::class, 'store'])->name('negotiation.store');
+    Route::post('/negotiations/{id}/counter', [NegotiationController::class, 'counter'])->name('negotiation.counter');
+    Route::post('/negotiations/{id}/accept', [NegotiationController::class, 'accept'])->name('negotiation.accept');
+    Route::post('/negotiations/{id}/reject', [NegotiationController::class, 'reject'])->name('negotiation.reject');
+    Route::post('/negotiations/{id}/pay', [NegotiationController::class, 'payAcceptedOffer'])->name('negotiation.pay');
+    Route::post('/negotiations/{id}/coinflip', [NegotiationController::class, 'initiateCoinFlip'])->name('negotiation.coinflip');
+
+    // Coin Flip Routes
+    Route::get('/coinflip/{id}', [CoinFlipController::class, 'show'])->name('coinflip.show');
+    Route::post('/coinflip/{id}/deposit', [CoinFlipController::class, 'payDeposit'])->name('coinflip.payDeposit');
+    Route::post('/coinflip/{id}/choose', [CoinFlipController::class, 'chooseSide'])->name('coinflip.choose');
+    Route::get('/coinflip/{id}/result', [CoinFlipController::class, 'result'])->name('coinflip.result');
+    Route::post('/coinflip/{id}/pay', [CoinFlipController::class, 'payRemaining'])->name('coinflip.payRemaining');
 
     // Seller Application (for buyers who want to become sellers)
     Route::get('/seller/apply', [ApplicationController::class, 'showForm'])->name('seller.apply');

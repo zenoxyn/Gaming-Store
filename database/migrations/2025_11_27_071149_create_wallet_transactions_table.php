@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_wallet')->constrained('wallets')->onDelete('cascade');
             $table->unsignedBigInteger('id_order')->nullable();
-            $table->enum('type', ['topup', 'withdraw', 'purchase', 'refund', 'escrow_in', 'escrow_out', 'fee', 'commission']);
+            $table->enum('type', ['topup', 'withdraw', 'purchase', 'refund', 'escrow_in', 'escrow_out', 'fee', 'commission', 'deposit_hold', 'deposit_release', 'penalty', 'sale']);
             $table->bigInteger('amount');
             $table->bigInteger('balance_before');
             $table->bigInteger('balance_after');

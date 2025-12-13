@@ -10,8 +10,21 @@ class Negotiation extends Model
         'id_product',
         'id_buyer',
         'id_seller',
+        'latest_buyer_offer',
+        'latest_seller_offer',
         'status',
+        'expires_at',
+        'coinflip_proposed_by',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'latest_buyer_offer' => 'integer',
+            'latest_seller_offer' => 'integer',
+            'expires_at' => 'datetime',
+        ];
+    }
 
     // Relationships
     public function product()
@@ -58,5 +71,25 @@ class Negotiation extends Model
     public function needsCoinFlip()
     {
         return $this->status === 'coinflip';
+    }
+
+    public function isExpired()
+    {
+        return $this->expires_at && now()->greaterThan($this->expires_at);
+    }
+
+    public function updateExpiry()
+    {
+        $this->expires_at = now()->addDay();
+        $this->save();
+    }
+
+    public function calculateDpAmount()
+    {
+        if (!$this->latest_buyer_offer || !$this->latest_seller_offer) {
+            return 0;
+        }
+
+        return abs($this->latest_seller_offer - $this->latest_buyer_offer) * 0.5;
     }
 }

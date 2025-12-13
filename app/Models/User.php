@@ -94,15 +94,36 @@ class User extends Authenticatable
         return $this->hasMany(ChatMessage::class, 'id_sender');
     }
 
+    public function buyerCoinFlipGames()
+    {
+        return $this->hasMany(CoinFlipGame::class, 'id_buyer');
+    }
+
+    public function sellerCoinFlipGames()
+    {
+        return $this->hasMany(CoinFlipGame::class, 'id_seller');
+    }
+
     // Helper methods
     public function isBuyer()
     {
-        return in_array($this->role_user, ['buyer', 'both']);
+        return $this->role_user === 'buyer';
     }
 
     public function isSeller()
     {
-        return in_array($this->role_user, ['seller', 'both']);
+        return $this->role_user === 'seller';
+    }
+
+    public function canBuy()
+    {
+        // Seller can also buy
+        return in_array($this->role_user, ['buyer', 'seller']);
+    }
+
+    public function canSell()
+    {
+        return $this->role_user === 'seller' && $this->seller && $this->seller->verification_status === 'verified';
     }
 
     public function isAdmin()

@@ -47,7 +47,7 @@
             <a href="{{ route('dashboard') }}" class="block px-4 py-3 hover:bg-purple-600/20 transition">
               <i class="ri-dashboard-line mr-2"></i>Dashboard
             </a>
-            <a href="#" class="block px-4 py-3 hover:bg-purple-600/20 transition">
+            <a href="{{ route('wallet.index') }}" class="block px-4 py-3 hover:bg-purple-600/20 transition">
               <i class="ri-wallet-line mr-2"></i>Wallet: Rp {{ number_format(auth()->user()->wallet->balance ?? 0, 0, ',', '.') }}
             </a>
             <form action="{{ route('logout') }}" method="POST">

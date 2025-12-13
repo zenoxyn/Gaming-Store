@@ -1,0 +1,125 @@
+<x-layout>
+<div class="min-h-screen pt-24 pb-12">
+    <div class="max-w-6xl mx-auto px-4">
+
+        {{-- Flash Messages --}}
+        @if(session('success'))
+            <div class="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-xl text-green-400">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-400">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div class="mb-6 p-4 bg-blue-500/20 border border-blue-500/50 rounded-xl text-blue-400">
+                {{ session('info') }}
+            </div>
+        @endif
+
+        {{-- Wallet Balance Card --}}
+        <div class="mb-8 p-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl shadow-2xl relative overflow-hidden">
+            {{-- Decorative background --}}
+            <div class="absolute inset-0 bg-white/5"></div>
+
+            <div class="relative flex items-center justify-between">
+                <div>
+                    <p class="text-white/80 text-sm mb-2 flex items-center gap-2">
+                        <i class="ri-wallet-3-line text-xl"></i>
+                        Total Balance
+                    </p>
+                    <h1 class="text-5xl font-bold text-white">
+                        Rp {{ number_format($wallet->balance, 0, ',', '.') }}
+                    </h1>
+                </div>
+                <div>
+                    <a href="{{ route('wallet.topup') }}"
+                       class="inline-flex items-center gap-2 px-8 py-4 bg-white text-purple-600 font-bold rounded-xl hover:bg-gray-100 hover:scale-105 transition-all shadow-lg">
+                        <i class="ri-add-circle-line text-xl"></i>
+                        Top-up
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Transaction History --}}
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="ri-history-line"></i>
+                    Transaction History
+                </h2>
+            </div>
+
+            @if($transactions->isEmpty())
+                <div class="text-center py-12 text-gray-400">
+                    <p class="text-xl">📝</p>
+                    <p class="mt-4">No transactions yet</p>
+                </div>
+            @else
+                <div class="space-y-3">
+                    @foreach($transactions as $transaction)
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition">
+                            <div class="flex items-center gap-4">
+                                {{-- Icon based on type --}}
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                        bg-green-500/20 text-green-400
+                                    @else
+                                        bg-red-500/20 text-red-400
+                                    @endif">
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                        ↑
+                                    @else
+                                        ↓
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <p class="text-white font-semibold capitalize">
+                                        {{ str_replace('_', ' ', $transaction->type) }}
+                                    </p>
+                                    <p class="text-gray-400 text-sm">
+                                        {{ $transaction->description ?? '-' }}
+                                    </p>
+                                    <p class="text-gray-500 text-xs mt-1">
+                                        {{ $transaction->created_at->format('d M Y, H:i') }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <p class="text-lg font-bold
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                        text-green-400
+                                    @else
+                                        text-red-400
+                                    @endif">
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                        +
+                                    @else
+                                        -
+                                    @endif
+                                    Rp {{ number_format(abs($transaction->amount), 0, ',', '.') }}
+                                </p>
+                                <p class="text-gray-500 text-xs">
+                                    Balance: Rp {{ number_format($transaction->balance_after, 0, ',', '.') }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                {{-- Pagination --}}
+                <div class="mt-6">
+                    {{ $transactions->links() }}
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+</x-layout>

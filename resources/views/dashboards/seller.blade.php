@@ -48,6 +48,10 @@
                     <p class="text-3xl font-bold text-purple-400">{{ auth()->user()->sellerOrders()->count() }}</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+                    <h3 class="text-sm text-gray-300 mb-2">Negotiations</h3>
+                    <p class="text-3xl font-bold text-yellow-400">{{ auth()->user()->sellerNegotiations()->where('status', 'ongoing')->count() }}</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
                     <h3 class="text-sm text-gray-300 mb-2">Rating</h3>
                     <p class="text-3xl font-bold text-yellow-400">
                         {{ number_format(auth()->user()->seller->rating ?? 0, 1) }} ⭐
@@ -56,24 +60,58 @@
             </div>
 
             <!-- Quick Actions -->
-            <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20 mb-8">
-                <h2 class="text-xl font-bold mb-4">Quick Actions</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="{{ route('seller.products.create') }}" class="flex flex-col items-center justify-center p-4 bg-purple-600 hover:bg-purple-700 rounded-lg transition">
-                        <span class="text-2xl mb-2">➕</span>
-                        <span class="text-sm">Add Product</span>
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="ri-flashlight-line"></i>
+                    Quick Actions
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="{{ route('seller.products.create') }}" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-purple-500/20 border border-purple-500/50 flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="ri-add-circle-line text-3xl text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition">Add Product</h3>
+                                <p class="text-sm text-gray-400 mt-1">Create new product listing</p>
+                            </div>
+                        </div>
                     </a>
-                    <a href="{{ route('seller.products.index') }}" class="flex flex-col items-center justify-center p-4 bg-blue-600 hover:bg-blue-700 rounded-lg transition">
-                        <span class="text-2xl mb-2">📦</span>
-                        <span class="text-sm">My Products</span>
+
+                    <a href="{{ route('seller.products.index') }}" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-blue-500/20 border border-blue-500/50 flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="ri-box-3-line text-3xl text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition">My Products</h3>
+                                <p class="text-sm text-gray-400 mt-1">Manage your product catalog</p>
+                            </div>
+                        </div>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center p-4 bg-green-600 hover:bg-green-700 rounded-lg transition">
-                        <span class="text-2xl mb-2">📊</span>
-                        <span class="text-sm">Sales Report</span>
+
+                    <a href="#" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-green-500/20 border border-green-500/50 flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="ri-bar-chart-box-line text-3xl text-green-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white group-hover:text-green-400 transition">Sales Report</h3>
+                                <p class="text-sm text-gray-400 mt-1">View sales analytics</p>
+                            </div>
+                        </div>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center p-4 bg-yellow-600 hover:bg-yellow-700 rounded-lg transition">
-                        <span class="text-2xl mb-2">💬</span>
-                        <span class="text-sm">Negotiations</span>
+
+                    <a href="{{ route('negotiation.index') }}" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-yellow-500/20 border border-yellow-500/50 flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="ri-chat-3-line text-3xl text-yellow-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white group-hover:text-yellow-400 transition">Negotiations</h3>
+                                <p class="text-sm text-gray-400 mt-1">Manage price negotiations</p>
+                            </div>
+                        </div>
                     </a>
                 </div>
             </div>

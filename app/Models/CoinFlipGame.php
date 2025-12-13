@@ -16,6 +16,9 @@ class CoinFlipGame extends Model
         'result',
         'winner',
         'final_price',
+        'payment_deadline',
+        'buyer_paid',
+        'penalty_distributed',
         'game_status',
         'played_at',
     ];
@@ -26,6 +29,9 @@ class CoinFlipGame extends Model
             'dp_amount' => 'integer',
             'final_price' => 'integer',
             'buyer_dp_paid' => 'boolean',
+            'payment_deadline' => 'datetime',
+            'buyer_paid' => 'boolean',
+            'penalty_distributed' => 'boolean',
             'played_at' => 'datetime',
         ];
     }
@@ -56,14 +62,15 @@ class CoinFlipGame extends Model
 
         // Calculate final price based on winner
         $negotiation = $this->negotiation;
-        $latestOffer = $negotiation->getLatestOffer();
-        $product = $negotiation->product;
 
         if ($this->winner === 'buyer') {
-            $this->final_price = $latestOffer->offered_price; // Buyer's offer
+            $this->final_price = $negotiation->latest_buyer_offer;
         } else {
-            $this->final_price = $product->getCurrentPrice(); // Seller's price
+            $this->final_price = $negotiation->latest_seller_offer;
         }
+
+        // Set payment deadline: 1 day from now
+        $this->payment_deadline = now()->addDay();
 
         $this->save();
         return $this;
@@ -77,5 +84,15 @@ class CoinFlipGame extends Model
     public function isFinished()
     {
         return $this->game_status === 'finished';
+    }
+
+    public function isPaymentOverdue()
+    {
+        return $this->payment_deadline && now()->greaterThan($this->payment_deadline) && !$this->buyer_paid;
+    }
+
+    public function getRemainingPayment()
+    {
+        return $this->final_price - $this->dp_amount;
     }
 }
