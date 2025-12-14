@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -50,5 +53,93 @@ class OrderController extends Controller
         }
 
         return view('orders.show', compact('order'));
+    }
+
+    public function checkout($productId)
+    {
+        $product = Product::with(['seller', 'category'])->findOrFail($productId);
+        $user = Auth::user();
+
+        // Check if user is the seller
+        if ($product->id_seller == $user->id) {
+            return redirect()->back()->with('error', 'You cannot buy your own product!');
+        }
+
+        // Check if product is available
+        if ($product->status !== 'available' || $product->stock < 1) {
+            return redirect()->back()->with('error', 'This product is not available.');
+        }
+
+        return view('checkout.index', compact('product'));
+    }
+
+    public function buyNow($productId)
+    {
+        $product = Product::findOrFail($productId);
+        $user = Auth::user();
+
+        // Check if user is the seller
+        if ($product->id_seller == $user->id) {
+            return redirect()->back()->with('error', 'You cannot buy your own product!');
+        }
+
+        // Check if product is available
+        if ($product->status !== 'available' || $product->stock < 1) {
+            return redirect()->back()->with('error', 'This product is not available.');
+        }
+
+        $price = $product->getCurrentPrice();
+        $platformFee = $price * 0.03; // 3% platform fee
+
+        // Check buyer wallet balance
+        $buyerWallet = Wallet::where('id_user', $user->id)->first();
+        if (!$buyerWallet || !$buyerWallet->hasBalance($price)) {
+            return redirect()->route('wallet.topup')
+                ->with('error', 'Insufficient wallet balance. Please top-up first.');
+        }
+
+        DB::beginTransaction();
+        try {
+            // Deduct from buyer wallet
+            $buyerWallet->deductBalance($price, 'purchase', 'Direct purchase - Product #' . $product->id);
+
+            // Add to seller wallet (minus platform fee)
+            $sellerWallet = Wallet::firstOrCreate(
+                ['id_user' => $product->id_seller],
+                ['balance' => 0]
+            );
+            $sellerAmount = $price - $platformFee;
+            $sellerWallet->addBalance($sellerAmount, 'sale', 'Product sale - Direct purchase #' . $product->id);
+
+            // Create order
+            $order = Order::create([
+                'id_product' => $product->id,
+                'id_buyer' => $user->id,
+                'id_seller' => $product->id_seller,
+                'quantity' => 1,
+                'original_price' => $price,
+                'final_price' => $price,
+                'platform_fee' => $platformFee,
+                'payment_method' => 'wallet',
+                'payment_status' => 'paid',
+                'order_status' => 'pending',
+            ]);
+
+            // Update product stock
+            $product->stock -= 1;
+            if ($product->stock <= 0) {
+                $product->status = 'sold';
+            }
+            $product->save();
+
+            DB::commit();
+
+            return redirect()->route('order.show', $order->id)
+                ->with('success', 'Payment successful! Your order has been created.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to process payment: ' . $e->getMessage());
+        }
     }
 }

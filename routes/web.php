@@ -92,6 +92,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('order.show');
 
+    // Direct Purchase Routes
+    Route::get('/product/{id}/checkout', [OrderController::class, 'checkout'])->name('product.checkout');
+    Route::post('/product/{id}/buy', [OrderController::class, 'buyNow'])->name('product.buyNow');
+
     // Seller Application (for buyers who want to become sellers)
     Route::get('/seller/apply', [ApplicationController::class, 'showForm'])->name('seller.apply');
     Route::post('/seller/apply', [ApplicationController::class, 'submit'])->name('seller.apply.submit');

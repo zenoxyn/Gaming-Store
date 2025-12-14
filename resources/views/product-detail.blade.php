@@ -337,7 +337,7 @@
                     <div class="px-6 pb-6">
                         <div class="flex items-center gap-3 mb-4">
                             <!-- Quantity -->
-                            <div class="flex items-center border-2 rounded-lg border-[#8a2be2]/30">
+                            <div class="flex-1 items-center border-2 rounded-lg border-[#8a2be2]/30">
                                 <button onclick="decreaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
                                     <i class="fas fa-minus"></i>
                                 </button>
@@ -348,9 +348,21 @@
                             </div>
 
                             <!-- Buy Button -->
-                            <button onclick="buyNow()" class="flex-1 py-3 font-semibold text-white transition rounded-lg cursor-pointer bg-linear-to-r from-[#8a2be2] to-[#ff1493] hover:opacity-90">
-                                Buy Now
-                            </button>
+                            @auth
+                                @if(auth()->user()->canBuy() && $product->id_seller !== auth()->id() && $product->status === 'available')
+                                    <a href="{{ route('product.checkout', $product->id) }}" class="flex-1 py-3 font-semibold text-white text-center transition-transform duration-200 rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 active:scale-95 block">
+                                        <i class="ri-shopping-cart-line mr-2"></i>Buy Now
+                                    </a>
+                                @else
+                                    <button disabled class="flex-1 py-3 font-semibold text-gray-400 transition rounded-lg cursor-not-allowed bg-gray-600/20">
+                                        Unavailable
+                                    </button>
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}" class="flex-1 py-3 font-semibold text-white text-center transition-transform duration-200 rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 active:scale-95 block">
+                                    <i class="ri-shopping-cart-line mr-2"></i>Buy Now
+                                </a>
+                            @endauth
                         </div>
 
                         {{-- Negotiate Button (Only for buyers, not sellers viewing their own product) --}}
@@ -364,7 +376,7 @@
                         @endauth
                     </div>
 
-                    <!-- ZeusX Guarantee -->
+                    <!--  Guarantee -->
                     <div class="flex gap-3 px-6 py-4 border-t bg-[#8a2be2]/5 border-[#8a2be2]/20">
                         <div class="shrink-0">
                             <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-linear-to-br from-[#8a2be2] to-[#ff1493]">
@@ -372,9 +384,9 @@
                             </div>
                         </div>
                         <div class="flex-1">
-                            <h6 class="mb-1 text-sm font-semibold">ZeusX Guarantee</h6>
+                            <h6 class="mb-1 text-sm font-semibold"> Guarantee</h6>
                             <p class="text-xs leading-relaxed text-gray-400">
-                                Your purchase made on the ZeusX platform are protected by us.
+                                Your purchase made on the  platform are protected by us.
                                 <a href="#" onclick="showGuaranteeInfo(); return false;" class="font-medium text-[#8a2be2] hover:underline cursor-pointer">Read more</a>
                             </p>
                         </div>
@@ -463,10 +475,24 @@
                     <i class="ri-discuss-line"></i>
                     <span class="text-sm">Nego</span>
                 </a>
-                <button onclick="buyNow()" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold text-white transition rounded-xl cursor-pointer bg-linear-to-r from-[#8a2be2] to-[#ff1493] hover:opacity-90">
-                    <i class="fas fa-bolt"></i>
-                    <span class="text-sm">Buy</span>
-                </button>
+                @auth
+                    @if(auth()->user()->canBuy() && $product->id_seller !== auth()->id() && $product->status === 'available')
+                        <a href="{{ route('product.checkout', $product->id) }}" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold text-white transition-transform duration-200 rounded-xl cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 active:scale-95">
+                            <i class="ri-shopping-cart-line"></i>
+                            <span class="text-sm">Buy</span>
+                        </a>
+                    @else
+                        <button disabled class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold text-gray-400 transition rounded-xl cursor-not-allowed bg-gray-600/20">
+                            <i class="fas fa-ban"></i>
+                            <span class="text-sm">Unavailable</span>
+                        </button>
+                    @endif
+                @else
+                    <a href="{{ route('login') }}" class="flex items-center justify-center flex-1 gap-2 py-3 font-semibold text-white transition-transform duration-200 rounded-xl cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 active:scale-95">
+                        <i class="ri-shopping-cart-line"></i>
+                        <span class="text-sm">Buy</span>
+                    </a>
+                @endauth
             </div>
         </div>
     </div>
@@ -680,7 +706,7 @@
 
         // Guarantee Info
         function showGuaranteeInfo() {
-            alert('ZeusX Guarantee:\n\n✓ Money-back guarantee\n✓ Secure payment processing\n✓ Account verification\n✓ 24/7 customer support\n✓ Dispute resolution service');
+            alert(' Guarantee:\n\n✓ Money-back guarantee\n✓ Secure payment processing\n✓ Account verification\n✓ 24/7 customer support\n✓ Dispute resolution service');
         }
 
         // View Product

@@ -45,7 +45,7 @@
                           placeholder="Add a message to the seller..."></textarea>
             </div>
 
-            <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
+            <button type="submit" class="w-full px-6 py-4 bg-linear-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
                 <i class="ri-send-plane-fill text-xl"></i>
                 Send Offer
             </button>
