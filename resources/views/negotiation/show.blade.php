@@ -21,9 +21,9 @@
         @endif
 
         {{-- Product Info Card --}}
-        <div class="mb-6 p-6 bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl">
+        <div class="mb-6 p-6 bg-linear-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl">
             <div class="flex items-center gap-6">
-                <img src="{{ asset('storage/' . json_decode($negotiation->product->images)[0]) }}"
+                <img src="{{ asset('storage/' . $negotiation->product->images[0]) }}"
                      alt="{{ $negotiation->product->name }}"
                      class="w-32 h-32 object-cover rounded-xl">
                 <div class="flex-1">
@@ -111,7 +111,7 @@
                     <textarea name="notes" rows="2"
                               class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition mb-3"
                               placeholder="Optional notes..."></textarea>
-                    <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:scale-105 transition">
+                    <button type="submit" class="w-full px-6 py-3 bg-linear-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:scale-105 transition">
                         Send Counter Offer
                     </button>
                 </form>
@@ -158,13 +158,13 @@
                                     Waiting for Other Party...
                                 </button>
                             @else
-                                <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
+                                <button type="submit" class="w-full px-6 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
                                     <i class="ri-check-double-line text-xl"></i>
                                     Accept Coin Flip ({{ $negotiation->coinflip_proposed_by == $negotiation->id_buyer ? 'Buyer' : 'Seller' }} Proposed)
                                 </button>
                             @endif
                         @else
-                            <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full px-6 py-4 bg-linear-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
                                 <i class="ri-copper-coin-line text-xl"></i>
                                 Propose Coin Flip
                             </button>
@@ -173,39 +173,65 @@
                 </div>
             </div>
         @elseif($negotiation->status === 'accepted')
-            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-                <div class="text-center">
-                    <i class="ri-check-double-line text-6xl text-green-400"></i>
-                    <h3 class="text-2xl font-bold text-white mt-4">Offer Accepted!</h3>
-                    <p class="text-gray-300 mt-2">Final Price: <span class="text-2xl font-bold text-green-400">Rp {{ number_format($negotiation->latest_seller_offer ?? $negotiation->latest_buyer_offer, 0, ',', '.') }}</span></p>
-                    
-                    @if(auth()->id() == $negotiation->id_buyer)
-                        <div class="mt-6 p-4 bg-yellow-500/20 border border-yellow-500/50 rounded-xl">
-                            <p class="text-yellow-300 font-semibold mb-4">
-                                <i class="ri-wallet-3-line"></i> Please complete payment to proceed
-                            </p>
-                            <form action="{{ route('negotiation.pay', $negotiation->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2 mx-auto">
-                                    <i class="ri-money-dollar-circle-line text-xl"></i>
-                                    Pay Now (Wallet)
-                                </button>
-                            </form>
-                        </div>
-                    @else
-                        <p class="text-gray-400 mt-4">
-                            <i class="ri-time-line"></i> Waiting for buyer to complete payment...
-                        </p>
-                    @endif
+            @php
+                // Check if order already created (payment completed)
+                $orderExists = \App\Models\Order::where('id_product', $negotiation->id_product)
+                    ->where('id_buyer', $negotiation->id_buyer)
+                    ->where('id_seller', $negotiation->id_seller)
+                    ->where('payment_status', 'paid')
+                    ->exists();
+            @endphp
+
+            @if($orderExists)
+                {{-- Payment completed, show success --}}
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+                    <div class="text-center">
+                        <i class="ri-check-double-line text-6xl text-green-400"></i>
+                        <h3 class="text-2xl font-bold text-white mt-4">Payment Completed!</h3>
+                        <p class="text-gray-300 mt-2">Your order has been created successfully</p>
+
+                        <a href="{{ route('order.index') }}" class="inline-block mt-6 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-xl hover:scale-105 transition">
+                            <i class="ri-shopping-bag-line mr-2"></i>
+                            View My Orders
+                        </a>
+                    </div>
                 </div>
-            </div>
+            @else
+                {{-- Payment not yet completed --}}
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+                    <div class="text-center">
+                        <i class="ri-check-double-line text-6xl text-green-400"></i>
+                        <h3 class="text-2xl font-bold text-white mt-4">Offer Accepted!</h3>
+                        <p class="text-gray-300 mt-2">Final Price: <span class="text-2xl font-bold text-green-400">Rp {{ number_format($negotiation->latest_seller_offer ?? $negotiation->latest_buyer_offer, 0, ',', '.') }}</span></p>
+
+                        @if(auth()->id() == $negotiation->id_buyer)
+                            <div class="mt-6 p-4 bg-yellow-500/20 border border-yellow-500/50 rounded-xl">
+                                <p class="text-yellow-300 font-semibold mb-4">
+                                    <i class="ri-wallet-3-line"></i> Please complete payment to proceed
+                                </p>
+                                <form action="{{ route('negotiation.pay', $negotiation->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="px-8 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2 mx-auto">
+                                        <i class="ri-money-dollar-circle-line text-xl"></i>
+                                        Pay Now (Wallet)
+                                    </button>
+                                </form>
+                            </div>
+                        @else
+                            <p class="text-gray-400 mt-4">
+                                <i class="ri-time-line"></i> Waiting for buyer to complete payment...
+                            </p>
+                        @endif
+                    </div>
+                </div>
+            @endif
         @elseif($negotiation->status === 'coinflip' && $negotiation->coinFlipGame)
-            <div class="text-center p-8 bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl">
+            <div class="text-center p-8 bg-linear-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl">
                 <i class="ri-copper-coin-line text-6xl text-yellow-400"></i>
                 <h3 class="text-2xl font-bold text-white mt-4">Coin Flip Game Started!</h3>
                 <p class="text-gray-300 mt-2">Proceed to the coin flip game to continue.</p>
                 <a href="{{ route('coinflip.show', $negotiation->coinFlipGame->id) }}"
-                   class="inline-block mt-6 px-8 py-4 bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-xl hover:scale-105 transition">
+                   class="inline-block mt-6 px-8 py-4 bg-linear-to-r from-yellow-600 to-orange-600 text-white font-bold rounded-xl hover:scale-105 transition">
                     Go to Coin Flip Game
                 </a>
             </div>

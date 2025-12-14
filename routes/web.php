@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\NegotiationController;
 use App\Http\Controllers\CoinFlipController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Seller\ApplicationController;
 use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -86,6 +87,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/coinflip/{id}/choose', [CoinFlipController::class, 'chooseSide'])->name('coinflip.choose');
     Route::get('/coinflip/{id}/result', [CoinFlipController::class, 'result'])->name('coinflip.result');
     Route::post('/coinflip/{id}/pay', [CoinFlipController::class, 'payRemaining'])->name('coinflip.payRemaining');
+
+    // Order Routes
+    Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('order.show');
 
     // Seller Application (for buyers who want to become sellers)
     Route::get('/seller/apply', [ApplicationController::class, 'showForm'])->name('seller.apply');

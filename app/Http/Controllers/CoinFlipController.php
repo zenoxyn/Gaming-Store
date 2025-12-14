@@ -8,6 +8,7 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CoinFlipController extends Controller
 {
@@ -154,39 +155,38 @@ class CoinFlipController extends Controller
 
         DB::beginTransaction();
         try {
+            // Calculate platform fee first
+            $platformFee = $coinFlip->final_price * 0.03; // 3% platform fee
+            $sellerAmount = $coinFlip->final_price - $platformFee;
+
             // Deduct remaining payment from buyer
             $wallet->deductBalance($remainingPayment, 'purchase', 'Coin Flip Final Payment - Negotiation #' . $coinFlip->id_negotiation);
 
-            // Add payment to seller (total = final_price because DP already held)
+            // Add payment to seller (final price minus platform fee)
             $sellerWallet = Wallet::firstOrCreate(
                 ['id_user' => $coinFlip->id_seller],
                 ['balance' => 0]
             );
-            $sellerWallet->addBalance($coinFlip->final_price, 'escrow_out', 'Sale from Coin Flip - Negotiation #' . $coinFlip->id_negotiation);
-
-            // Add marketplace commission (DP was held, now release a portion as fee)
-            // For now, we'll skip commission from DP since buyer already paid it
+            $sellerWallet->addBalance($sellerAmount, 'sale', 'Sale from Coin Flip - Negotiation #' . $coinFlip->id_negotiation);
 
             // Update coin flip status
             $coinFlip->buyer_paid = true;
             $coinFlip->save();
 
-            // Update negotiation status to accepted
+            // Keep negotiation status as 'coinflip' (don't change to 'completed' - not in enum)
+            // Payment done, order created, but status stays 'coinflip'
             $negotiation = $coinFlip->negotiation;
-            $negotiation->status = 'accepted';
-            $negotiation->save();
 
             // Update ALL offers to accepted (deal is final)
             $negotiation->offers()->whereIn('status', ['pending', 'countered'])->update(['status' => 'accepted']);
 
             // Create order
-            $platformFee = $coinFlip->final_price * 0.05; // 5% platform fee
             $order = Order::create([
                 'id_product' => $negotiation->id_product,
                 'id_buyer' => $coinFlip->id_buyer,
                 'id_seller' => $coinFlip->id_seller,
                 'quantity' => 1,
-                'original_price' => $negotiation->product->getCurrentPrice(),
+                'original_price' => $negotiation->product->getCurrentPrice(), // Original product price
                 'final_price' => $coinFlip->final_price,
                 'platform_fee' => $platformFee,
                 'payment_method' => 'wallet',

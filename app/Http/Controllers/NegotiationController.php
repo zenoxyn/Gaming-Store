@@ -68,11 +68,22 @@ class NegotiationController extends Controller
             return redirect()->back()->with('error', 'This product is not available for negotiation.');
         }
 
-        // Check if active negotiation already exists
+        // Check if active negotiation already exists (ongoing, accepted, or unpaid coinflip)
         $existingNego = Negotiation::where('id_product', $productId)
             ->where('id_buyer', $user->id)
-            ->whereIn('status', ['ongoing', 'coinflip'])
+            ->whereIn('status', ['ongoing', 'accepted'])
             ->first();
+
+        // Also check for unpaid coin flip
+        if (!$existingNego) {
+            $existingNego = Negotiation::where('id_product', $productId)
+                ->where('id_buyer', $user->id)
+                ->where('status', 'coinflip')
+                ->whereHas('coinFlipGame', function($q) {
+                    $q->where('buyer_paid', false);
+                })
+                ->first();
+        }
 
         if ($existingNego) {
             return redirect()->route('negotiation.show', $existingNego->id)
@@ -233,7 +244,7 @@ class NegotiationController extends Controller
                 ['id_user' => $negotiation->id_seller],
                 ['balance' => 0]
             );
-            $platformFee = $finalPrice * 0.05; // 5% platform fee
+            $platformFee = $finalPrice * 0.03; // 3% platform fee
             $sellerAmount = $finalPrice - $platformFee;
             $sellerWallet->addBalance($sellerAmount, 'sale', 'Product sale from negotiation #' . $negotiation->id);
 
@@ -243,7 +254,7 @@ class NegotiationController extends Controller
                 'id_buyer' => $negotiation->id_buyer,
                 'id_seller' => $negotiation->id_seller,
                 'quantity' => 1,
-                'original_price' => $negotiation->product->getCurrentPrice(),
+                'original_price' => $negotiation->product->getCurrentPrice(), // Original product price
                 'final_price' => $finalPrice,
                 'platform_fee' => $platformFee,
                 'payment_method' => 'wallet',

@@ -21,6 +21,18 @@
             </div>
         @endif
 
+        {{-- Back Button --}}
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                <i class="ri-wallet-line"></i>
+                My Wallet
+            </h1>
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-4 py-2 font-semibold text-white transition bg-white/10 rounded-xl hover:bg-white/20">
+                    <i class="ri-arrow-left-line"></i>
+                    Back to Dashboard
+            </a>
+        </div>
+
         {{-- Wallet Balance Card --}}
         <div class="mb-8 p-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl shadow-2xl relative overflow-hidden">
             {{-- Decorative background --}}
@@ -67,15 +79,15 @@
                             <div class="flex items-center gap-4">
                                 {{-- Icon based on type --}}
                                 <div class="w-12 h-12 rounded-full flex items-center justify-center
-                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'sale', 'escrow_out', 'deposit_release', 'penalty']))
                                         bg-green-500/20 text-green-400
                                     @else
                                         bg-red-500/20 text-red-400
                                     @endif">
-                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
-                                        ↑
-                                    @else
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'sale', 'escrow_out', 'deposit_release', 'penalty']))
                                         ↓
+                                    @else
+                                        ↑
                                     @endif
                                 </div>
 
@@ -94,12 +106,12 @@
 
                             <div class="text-right">
                                 <p class="text-lg font-bold
-                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'sale', 'escrow_out', 'deposit_release', 'penalty']))
                                         text-green-400
                                     @else
                                         text-red-400
                                     @endif">
-                                    @if(in_array($transaction->type, ['topup', 'refund', 'escrow_out', 'deposit_release', 'penalty']))
+                                    @if(in_array($transaction->type, ['topup', 'refund', 'sale', 'escrow_out', 'deposit_release', 'penalty']))
                                         +
                                     @else
                                         -

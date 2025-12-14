@@ -113,6 +113,30 @@
                             </div>
                         </div>
                     </a>
+
+                    <a href="{{ route('order.index') }}" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-orange-500/20 border border-orange-500/50 flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="ri-shopping-bag-3-line text-3xl text-orange-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition">My Orders</h3>
+                                <p class="text-sm text-gray-400 mt-1">Manage sales orders</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{{ route('wallet.index') }}" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-pink-500/20 border border-pink-500/50 flex items-center justify-center group-hover:scale-110 transition">
+                                <i class="ri-wallet-3-line text-3xl text-pink-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white group-hover:text-pink-400 transition">My Wallet</h3>
+                                <p class="text-sm text-gray-400 mt-1">Manage your wallet & transactions</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
 

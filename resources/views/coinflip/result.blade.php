@@ -2,6 +2,25 @@
 <div class="min-h-screen pt-24 pb-12">
     <div class="max-w-4xl mx-auto px-6">
 
+        {{-- Flash Messages --}}
+        @if(session('success'))
+            <div class="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-xl text-green-400">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-400">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div class="mb-6 p-4 bg-blue-500/20 border border-blue-500/50 rounded-xl text-blue-400">
+                {{ session('info') }}
+            </div>
+        @endif
+
         <div class="text-center mb-8">
             {{-- Coin Animation --}}
             <div class="inline-block mb-6">
@@ -93,11 +112,19 @@
             <div class="text-center p-8 bg-green-500/20 border border-green-500/50 rounded-2xl">
                 <i class="ri-check-double-line text-6xl text-green-400"></i>
                 <h3 class="text-2xl font-bold text-white mt-4">Payment Completed!</h3>
-                <p class="text-gray-300 mt-2">Transaction successful. Thank you!</p>
-                <a href="{{ route('negotiation.show', $coinFlip->id_negotiation) }}"
-                   class="inline-block mt-6 px-6 py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition">
-                    Back to Negotiation
-                </a>
+                <p class="text-gray-300 mt-2">Transaction successful. Your order has been created!</p>
+
+                <div class="flex gap-4 justify-center mt-6">
+                    <a href="{{ route('order.index') }}"
+                       class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:scale-105 transition">
+                        <i class="ri-shopping-bag-line mr-2"></i>
+                        View My Orders
+                    </a>
+                    <a href="{{ route('negotiation.show', $coinFlip->id_negotiation) }}"
+                       class="px-6 py-3 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition">
+                        Back to Negotiation
+                    </a>
+                </div>
             </div>
         @else
             <div class="text-center p-8 bg-blue-500/20 border border-blue-500/50 rounded-2xl">

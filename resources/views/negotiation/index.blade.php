@@ -3,18 +3,18 @@
     <div class="max-w-7xl mx-auto px-6">
 
         {{-- Back Button --}}
-        <div class="mb-6">
-            <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
-                <i class="ri-arrow-left-line"></i>
-                <span>Back</span>
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                <i class="ri-auction-line"></i>
+                My Negotiations
+            </h1>
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-4 py-2 font-semibold text-white transition bg-white/10 rounded-xl hover:bg-white/20">
+                    <i class="ri-arrow-left-line"></i>
+                    Back to Dashboard
             </a>
         </div>
 
-        <h1 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-            <i class="ri-auction-line"></i>
-            My Negotiations
-        </h1>
-
+        {{-- Flash Messages --}}
         @if($negotiations->isEmpty())
             <div class="text-center py-20 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">
                 <i class="ri-chat-off-line text-6xl text-gray-500"></i>
@@ -28,7 +28,7 @@
                        class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
                         <div class="flex items-center gap-6">
                             {{-- Product Image --}}
-                            <img src="{{ asset('storage/' . json_decode($nego->product->images)[0]) }}"
+                            <img src="{{ asset('storage/' . $nego->product->images[0]) }}"
                                  alt="{{ $nego->product->name }}"
                                  class="w-24 h-24 object-cover rounded-xl">
 

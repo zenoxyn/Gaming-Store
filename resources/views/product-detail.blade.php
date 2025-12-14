@@ -337,7 +337,7 @@
                     <div class="px-6 pb-6">
                         <div class="flex items-center gap-3 mb-4">
                             <!-- Quantity -->
-                            <div class="flex-1 items-center border-2 rounded-lg border-[#8a2be2]/30">
+                            <div class="flex items-center border-2 rounded-lg border-[#8a2be2]/30">
                                 <button onclick="decreaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
                                     <i class="fas fa-minus"></i>
                                 </button>
