@@ -2,9 +2,17 @@
 <div class="min-h-screen pt-24 pb-12">
     <div class="max-w-3xl mx-auto px-6">
 
-        <h1 class="text-3xl font-bold text-white mb-8 text-center">
-            Start Negotiation
-        </h1>
+        {{-- Back Button --}}
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                <i class="ri-auction-line"></i>
+                Start a Negotiation
+            </h1>
+            <a href="{{ route('product.show', $product->id) }}" class="flex items-center gap-2 px-4 py-2 font-semibold text-white transition bg-white/10 rounded-xl hover:bg-white/20">
+                    <i class="ri-arrow-left-line"></i>
+                    Back to Product
+            </a>
+        </div>
 
         {{-- Product Card --}}
         <div class="mb-6 p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">

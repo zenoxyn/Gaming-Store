@@ -174,10 +174,8 @@
             </div>
         @elseif($negotiation->status === 'accepted')
             @php
-                // Check if order already created (payment completed)
-                $orderExists = \App\Models\Order::where('id_product', $negotiation->id_product)
-                    ->where('id_buyer', $negotiation->id_buyer)
-                    ->where('id_seller', $negotiation->id_seller)
+                // Check if order already created for THIS negotiation (payment completed)
+                $orderExists = \App\Models\Order::where('id_negotiation', $negotiation->id)
                     ->where('payment_status', 'paid')
                     ->exists();
             @endphp
@@ -209,9 +207,19 @@
                                 <p class="text-yellow-300 font-semibold mb-4">
                                     <i class="ri-wallet-3-line"></i> Please complete payment to proceed
                                 </p>
-                                <form action="{{ route('negotiation.pay', $negotiation->id) }}" method="POST">
+                                <form action="{{ route('negotiation.pay', $negotiation->id) }}" method="POST" class="space-y-4">
                                     @csrf
-                                    <button type="submit" class="px-8 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2 mx-auto">
+                                    <div class="text-left">
+                                        <label class="block mb-2 text-sm font-semibold text-gray-300">
+                                            <i class="ri-information-line mr-1"></i>
+                                            Account Information (Optional)
+                                        </label>
+                                        <textarea name="buyer_notes" rows="3" maxlength="500"
+                                                  class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition text-sm"
+                                                  placeholder="Player ID, Server, or any information needed for delivery...">{{ old('buyer_notes') }}</textarea>
+                                        <p class="mt-1 text-xs text-gray-500">Example: Player ID: 123456789 | Server: Asia</p>
+                                    </div>
+                                    <button type="submit" class="w-full px-8 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition flex items-center justify-center gap-2">
                                         <i class="ri-money-dollar-circle-line text-xl"></i>
                                         Pay Now (Wallet)
                                     </button>

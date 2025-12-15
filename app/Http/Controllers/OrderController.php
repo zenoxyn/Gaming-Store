@@ -73,13 +73,13 @@ class OrderController extends Controller
         return view('checkout.index', compact('product'));
     }
 
-    public function buyNow($productId)
+    public function buyNow(Request $request, $productId)
     {
-        $product = Product::findOrFail($productId);
+        $product = Product::with('seller')->findOrFail($productId);
         $user = Auth::user();
 
         // Check if user is the seller
-        if ($product->id_seller == $user->id) {
+        if ($product->seller->id_user == $user->id) {
             return redirect()->back()->with('error', 'You cannot buy your own product!');
         }
 
@@ -90,6 +90,11 @@ class OrderController extends Controller
 
         $price = $product->getCurrentPrice();
         $platformFee = $price * 0.03; // 3% platform fee
+
+        // Validate buyer notes
+        $request->validate([
+            'buyer_notes' => 'nullable|string|max:500',
+        ]);
 
         // Check buyer wallet balance
         $buyerWallet = Wallet::where('id_user', $user->id)->first();
@@ -105,7 +110,7 @@ class OrderController extends Controller
 
             // Add to seller wallet (minus platform fee)
             $sellerWallet = Wallet::firstOrCreate(
-                ['id_user' => $product->id_seller],
+                ['id_user' => $product->seller->id_user],
                 ['balance' => 0]
             );
             $sellerAmount = $price - $platformFee;
@@ -115,7 +120,7 @@ class OrderController extends Controller
             $order = Order::create([
                 'id_product' => $product->id,
                 'id_buyer' => $user->id,
-                'id_seller' => $product->id_seller,
+                'id_seller' => $product->seller->id_user,
                 'quantity' => 1,
                 'original_price' => $price,
                 'final_price' => $price,
@@ -123,6 +128,7 @@ class OrderController extends Controller
                 'payment_method' => 'wallet',
                 'payment_status' => 'paid',
                 'order_status' => 'pending',
+                'buyer_notes' => $request->input('buyer_notes'),
             ]);
 
             // Update product stock
@@ -141,5 +147,58 @@ class OrderController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to process payment: ' . $e->getMessage());
         }
+    }
+
+    public function uploadDelivery(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $user = Auth::user();
+
+        // Only seller can upload delivery
+        if ($order->id_seller != $user->id) {
+            abort(403, 'Unauthorized action');
+        }
+
+        // Only allow if payment is completed and order is pending
+        if ($order->payment_status !== 'paid' || $order->order_status !== 'pending') {
+            return redirect()->back()->with('error', 'Cannot upload delivery for this order status.');
+        }
+
+        $request->validate([
+            'delivery_proof' => 'required|string|max:1000',
+            'delivery_notes' => 'nullable|string|max:500',
+        ]);
+
+        $order->update([
+            'delivery_proof' => $request->delivery_proof,
+            'delivery_info' => $request->delivery_notes,
+            'delivery_uploaded_at' => now(),
+            'order_status' => 'processing',
+        ]);
+
+        return redirect()->back()->with('success', 'Delivery information uploaded successfully!');
+    }
+
+    public function confirmDelivery($id)
+    {
+        $order = Order::findOrFail($id);
+        $user = Auth::user();
+
+        // Only buyer can confirm delivery
+        if ($order->id_buyer != $user->id) {
+            abort(403, 'Unauthorized action');
+        }
+
+        // Only allow if order is in processing status
+        if ($order->order_status !== 'processing') {
+            return redirect()->back()->with('error', 'Cannot confirm delivery for this order status.');
+        }
+
+        $order->update([
+            'order_status' => 'completed',
+            'completed_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Order completed! Thank you for your confirmation.');
     }
 }

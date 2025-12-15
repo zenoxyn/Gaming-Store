@@ -10,6 +10,7 @@ class Order extends Model
         'id_product',
         'id_buyer',
         'id_seller',
+        'id_negotiation',
         'quantity',
         'original_price',
         'final_price',
@@ -18,6 +19,8 @@ class Order extends Model
         'payment_status',
         'order_status',
         'delivery_info',
+        'delivery_proof',
+        'delivery_uploaded_at',
         'buyer_notes',
         'seller_notes',
         'completed_at',
@@ -31,6 +34,7 @@ class Order extends Model
             'original_price' => 'integer',
             'final_price' => 'integer',
             'platform_fee' => 'integer',
+            'delivery_uploaded_at' => 'datetime',
             'completed_at' => 'datetime',
             'canceled_at' => 'datetime',
         ];
@@ -50,6 +54,11 @@ class Order extends Model
     public function seller()
     {
         return $this->belongsTo(User::class, 'id_seller');
+    }
+
+    public function negotiation()
+    {
+        return $this->belongsTo(Negotiation::class, 'id_negotiation');
     }
 
     public function review()

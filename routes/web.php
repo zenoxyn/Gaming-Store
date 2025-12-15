@@ -91,6 +91,8 @@ Route::middleware('auth')->group(function () {
     // Order Routes
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('order.show');
+    Route::post('/orders/{id}/upload-delivery', [OrderController::class, 'uploadDelivery'])->name('order.uploadDelivery');
+    Route::post('/orders/{id}/confirm-delivery', [OrderController::class, 'confirmDelivery'])->name('order.confirmDelivery');
 
     // Direct Purchase Routes
     Route::get('/product/{id}/checkout', [OrderController::class, 'checkout'])->name('product.checkout');

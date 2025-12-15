@@ -12,19 +12,46 @@
     <!-- Mobile Sticky Header -->
     <div class="sticky top-0 z-50 px-4 py-3 border-b lg:hidden bg-[#2d1b4e]/95 backdrop-blur-lg border-[#8a2be2]/30">
         <div class="flex items-center gap-3">
-            <button onclick="goBack()" class="flex items-center justify-center w-10 h-10 transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
+            @php
+                $backRoute = isset($product->category) && $product->category ? route('products.category', $product->category->slug) : match($product->type_product) {
+                    'account' => route('products.account'),
+                    'in-game-items' => route('products.ingame'),
+                    'top-up' => route('products.topup'),
+                    default => route('home')
+                };
+            @endphp
+            <a href="{{ $backRoute }}" class="flex items-center justify-center w-10 h-10 transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
                 <i class="fas fa-arrow-left"></i>
-            </button>
+            </a>
             <div class="flex-1 text-base font-semibold truncate">Product Detail</div>
         </div>
     </div>
 
     <!-- Desktop Back Button -->
     <div class="hidden px-6 mx-auto mt-6 max-w-7xl lg:block">
-        <button onclick="goBack()" class="inline-flex items-center gap-2 px-4 py-2 text-sm transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
+        @php
+            if(isset($product->category) && $product->category) {
+                $backRoute = route('products.category', $product->category->slug);
+                $backLabel = 'Back to ' . $product->category->name;
+            } else {
+                $backRoute = match($product->type_product) {
+                    'account' => route('products.account'),
+                    'in-game-items' => route('products.ingame'),
+                    'top-up' => route('products.topup'),
+                    default => route('home')
+                };
+                $backLabel = match($product->type_product) {
+                    'account' => 'Back to Accounts',
+                    'in-game-items' => 'Back to In-Game Items',
+                    'top-up' => 'Back to Top Up',
+                    default => 'Back to Home'
+                };
+            }
+        @endphp
+        <a href="{{ $backRoute }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm transition border rounded-full cursor-pointer bg-white/10 hover:bg-white/20 border-white/20">
             <i class="fas fa-arrow-left"></i>
-            <span>Back</span>
-        </button>
+            <span>{{ $backLabel }}</span>
+        </a>
     </div>
 
     <!-- Main Content -->

@@ -60,7 +60,7 @@
             <!-- Buyer Info -->
             <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
                 <h2 class="text-xl font-bold text-white mb-4">Buyer Information</h2>
-                <div class="space-y-2 text-sm">
+                <div class="space-y-2 text-sm mb-4">
                     <div class="flex justify-between">
                         <span class="text-gray-400">Name</span>
                         <span class="text-white font-semibold">{{ auth()->user()->username }}</span>
@@ -70,6 +70,20 @@
                         <span class="text-white">{{ auth()->user()->email }}</span>
                     </div>
                 </div>
+                
+                <form id="checkoutForm" action="{{ route('product.buyNow', $product->id) }}" method="POST">
+                    @csrf
+                    <div>
+                        <label class="block mb-2 text-sm font-semibold text-gray-300">
+                            <i class="ri-information-line mr-1"></i>
+                            Account Information (Optional)
+                        </label>
+                        <textarea name="buyer_notes" rows="3" maxlength="500"
+                                  class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition text-sm"
+                                  placeholder="Player ID, Server, or any information needed for delivery...">{{ old('buyer_notes') }}</textarea>
+                        <p class="mt-1 text-xs text-gray-500">Example: Player ID: 123456789 | Server: Asia</p>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -121,15 +135,12 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <form action="{{ route('product.buyNow', $product->id) }}" method="POST">
-                    @csrf
-                    <button type="submit"
-                            @if(!$sufficient) disabled @endif
-                            class="w-full px-6 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mb-3">
-                        <i class="ri-check-line mr-2"></i>
-                        Confirm & Pay
-                    </button>
-                </form>
+                <button type="submit" form="checkoutForm"
+                        @if(!$sufficient) disabled @endif
+                        class="w-full px-6 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mb-3">
+                    <i class="ri-check-line mr-2"></i>
+                    Confirm & Pay
+                </button>
 
                 @if(!$sufficient)
                     <a href="{{ route('wallet.topup') }}" class="block w-full px-6 py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition text-center mb-3">

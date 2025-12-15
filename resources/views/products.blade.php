@@ -151,16 +151,17 @@
     </section>
 
     <!-- Products Grid -->
-    <section class="grid grid-cols-2 gap-3 px-4 mx-auto mt-4 lg:grid-cols-5 lg:gap-5 lg:px-5 lg:mt-8 max-w-7xl" id="productsGrid">
+    <!-- Products Grid Desktop -->
+    <section class="hidden lg:grid grid-cols-5 gap-5 px-5 mx-auto mt-8 max-w-7xl" id="productsGrid">
         @forelse($products as $product)
-            <a href="{{ route('product.show', $product->slug) }}" class="bg-[#2d1b4e]/90 rounded-xl lg:rounded-2xl overflow-hidden border border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
+            <a href="{{ route('product.show', $product->slug) }}" class="bg-[#2d1b4e]/90 rounded-2xl overflow-hidden border border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
                data-price="{{ $product->getCurrentPrice() }}"
                data-created="{{ $product->created_at->timestamp }}"
                data-popularity="{{ $product->averageRating() * 100 }}">
                 @php
                     $productImages = is_array($product->images) ? $product->images : [];
                 @endphp
-                <div class="relative flex items-center justify-center text-4xl lg:text-5xl h-32 lg:h-44 {{ empty($productImages) ? 'bg-linear-to-br from-[#2d1b4e] to-purple-900' : 'bg-black' }}">
+                <div class="relative flex items-center justify-center text-5xl h-44 {{ empty($productImages) ? 'bg-linear-to-br from-[#2d1b4e] to-purple-900' : 'bg-black' }}">
                     @if(!empty($productImages))
                         <img src="{{ asset('storage/' . $productImages[0]) }}" alt="{{ $product->name_product }}" class="object-cover w-full h-full">
                     @else
@@ -180,20 +181,20 @@
                     </div>
                     @endif
                 </div>
-                <div class="p-3 lg:p-4">
-                    <div class="mb-1 text-[10px] lg:text-xs font-semibold text-[#8a2be2] uppercase">{{ $product->category->name }}</div>
-                    <div class="h-8 mb-2 overflow-hidden text-xs leading-tight lg:h-10 lg:mb-3 lg:text-sm">{{ Str::limit($product->name_product, 45) }}</div>
-                    <div class="mb-2 text-base font-bold lg:mb-3 lg:text-xl text-yellow-400">
+                <div class="p-4">
+                    <div class="mb-1 text-xs font-semibold text-[#8a2be2] uppercase">{{ $product->category->name }}</div>
+                    <div class="h-10 mb-3 overflow-hidden text-sm leading-tight">{{ Str::limit($product->name_product, 45) }}</div>
+                    <div class="mb-3 text-xl font-bold text-yellow-400">
                         Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}
                         @if($product->discount_price && $product->discount_price < $product->price)
-                            <span class="block text-[10px] lg:text-xs text-gray-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                            <span class="block text-xs text-gray-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                         @endif
                     </div>
-                    <div class="flex items-center gap-2 pt-2 lg:pt-3 border-t border-[#8a2be2]/20">
-                        <div class="flex items-center justify-center w-5 h-5 text-[10px] lg:w-6 lg:h-6 lg:text-xs rounded-full bg-linear-to-br from-[#8a2be2] to-[#ff1493]">
+                    <div class="flex items-center gap-2 pt-3 border-t border-[#8a2be2]/20">
+                        <div class="flex items-center justify-center w-6 h-6 text-xs rounded-full bg-linear-to-br from-[#8a2be2] to-[#ff1493]">
                             <i class="fas fa-user"></i>
                         </div>
-                        <div class="flex items-center flex-1 gap-1 text-[11px] lg:text-xs">
+                        <div class="flex items-center flex-1 gap-1 text-xs">
                             <span class="text-gray-300 truncate">{{ $product->seller->user->username }}</span>
                             <span class="text-yellow-400">
                                 <i class="fas fa-star"></i> {{ number_format($product->seller->rating, 1) }}
@@ -203,7 +204,64 @@
                 </div>
             </a>
         @empty
-            <div class="col-span-2 p-8 text-center text-gray-400 lg:col-span-5">No products found.</div>
+            <div class="col-span-5 p-8 text-center text-gray-400">No products found.</div>
+        @endforelse
+    </section>
+
+    <!-- Products Grid Mobile -->
+    <section class="grid lg:hidden grid-cols-2 gap-3 px-4 mx-auto mt-4 max-w-7xl" id="productsGrid">
+        @forelse($products as $product)
+            <a href="{{ route('product.show', $product->slug) }}" class="bg-[#2d1b4e]/90 rounded-xl overflow-hidden border border-[#8a2be2]/20 hover:-translate-y-1 hover:border-[#8a2be2] transition-all cursor-pointer"
+               data-price="{{ $product->getCurrentPrice() }}"
+               data-created="{{ $product->created_at->timestamp }}"
+               data-popularity="{{ $product->averageRating() * 100 }}">
+                @php
+                    $productImages = is_array($product->images) ? $product->images : [];
+                @endphp
+                <div class="relative flex items-center justify-center text-4xl h-32 {{ empty($productImages) ? 'bg-linear-to-br from-[#2d1b4e] to-purple-900' : 'bg-black' }}">
+                    @if(!empty($productImages))
+                        <img src="{{ asset('storage/' . $productImages[0]) }}" alt="{{ $product->name_product }}" class="object-cover w-full h-full">
+                    @else
+                        <span>🎮</span>
+                    @endif
+
+                    @if($product->averageRating() >= 4.5)
+                    <div class="absolute flex items-center gap-1 px-3 py-1 text-xs rounded-full top-2 right-2 bg-black/70">
+                        <i class="text-yellow-400 fas fa-star"></i>
+                        Top-rate
+                    </div>
+                    @endif
+
+                    @if($product->discount_price && $product->discount_price < $product->price)
+                    <div class="absolute flex items-center justify-center rounded-lg bottom-2 right-2 bg-[#8a2be2]/90 px-2 py-1 text-xs font-bold">
+                        -{{ round((($product->price - $product->discount_price) / $product->price) * 100) }}%
+                    </div>
+                    @endif
+                </div>
+                <div class="p-3">
+                    <div class="mb-1 text-[10px] font-semibold text-[#8a2be2] uppercase">{{ $product->category->name }}</div>
+                    <div class="h-8 mb-2 overflow-hidden text-xs leading-tight">{{ Str::limit($product->name_product, 45) }}</div>
+                    <div class="mb-2 text-base font-bold text-yellow-400">
+                        Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}
+                        @if($product->discount_price && $product->discount_price < $product->price)
+                            <span class="block text-[10px] text-gray-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                        @endif
+                    </div>
+                    <div class="flex items-center gap-2 pt-2 border-t border-[#8a2be2]/20">
+                        <div class="flex items-center justify-center w-5 h-5 text-[10px] rounded-full bg-linear-to-br from-[#8a2be2] to-[#ff1493]">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="flex items-center flex-1 gap-1 text-[11px]">
+                            <span class="text-gray-300 truncate">{{ $product->seller->user->username }}</span>
+                            <span class="text-yellow-400">
+                                <i class="fas fa-star"></i> {{ number_format($product->seller->rating, 1) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        @empty
+            <div class="col-span-2 p-8 text-center text-gray-400">No products found.</div>
         @endforelse
     </section>
 
@@ -218,22 +276,46 @@
     </h2>
 
     <!-- Game Categories -->
-    <section class="px-4 mx-auto mt-8 lg:px-5 lg:mt-12 max-w-7xl">
-        <h2 class="mb-5 text-xl font-bold lg:mb-5 lg:text-2xl">Browse by Game</h2>
-        <div class="grid grid-cols-3 gap-3 lg:grid-cols-5 lg:gap-4">
+    <!-- Game Categories Desktop -->
+    <section class="hidden lg:block px-5 mx-auto mt-12 max-w-7xl">
+        <h2 class="mb-5 text-2xl font-bold">Browse by Game</h2>
+        <div class="grid grid-cols-5 gap-4">
             @foreach($categories as $cat)
-                <a href="{{ route('products.category', $cat->slug) }}" class="relative block overflow-hidden rounded-lg lg:rounded-xl group aspect-square transition-all border {{ isset($category) && $category->id == $cat->id ? 'border-[#8a2be2]' : 'border-[#8a2be2]/20' }} hover:border-[#8a2be2]">
+                <a href="{{ route('products.category', $cat->slug) }}" class="relative block overflow-hidden rounded-xl group aspect-square transition-all border {{ isset($category) && $category->id == $cat->id ? 'border-[#8a2be2]' : 'border-[#8a2be2]/20' }} hover:border-[#8a2be2]">
                     @if($cat->icon)
                         <img src="{{ asset('storage/' . $cat->icon) }}" alt="{{ $cat->name }}" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                     @else
-                        <div class="w-full h-full bg-linear-to-br from-[#2d1b4e] to-purple-900 flex items-center justify-center text-4xl lg:text-6xl">
+                        <div class="w-full h-full bg-linear-to-br from-[#2d1b4e] to-purple-900 flex items-center justify-center text-6xl">
                             🎮
                         </div>
                     @endif
                     <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-3 lg:p-4">
-                        <p class="text-sm font-semibold text-white lg:text-base">{{ $cat->name }}</p>
-                        <span class="block mt-1 text-[10px] lg:text-xs text-gray-300">{{ $cat->products_count }} items</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                        <p class="text-base font-semibold text-white">{{ $cat->name }}</p>
+                        <span class="block mt-1 text-xs text-gray-300">{{ $cat->products_count }} items</span>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </section>
+
+    <!-- Game Categories Mobile -->
+    <section class="block lg:hidden px-4 mx-auto mt-8 max-w-7xl">
+        <h2 class="mb-5 text-xl font-bold">Browse by Game</h2>
+        <div class="grid grid-cols-3 gap-3">
+            @foreach($categories as $cat)
+                <a href="{{ route('products.category', $cat->slug) }}" class="relative block overflow-hidden rounded-lg group aspect-square transition-all border {{ isset($category) && $category->id == $cat->id ? 'border-[#8a2be2]' : 'border-[#8a2be2]/20' }} hover:border-[#8a2be2]">
+                    @if($cat->icon)
+                        <img src="{{ asset('storage/' . $cat->icon) }}" alt="{{ $cat->name }}" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
+                    @else
+                        <div class="w-full h-full bg-linear-to-br from-[#2d1b4e] to-purple-900 flex items-center justify-center text-4xl">
+                            🎮
+                        </div>
+                    @endif
+                    <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <p class="text-sm font-semibold text-white">{{ $cat->name }}</p>
+                        <span class="block mt-1 text-[10px] text-gray-300">{{ $cat->products_count }} items</span>
                     </div>
                 </a>
             @endforeach

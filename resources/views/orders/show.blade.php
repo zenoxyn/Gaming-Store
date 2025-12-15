@@ -95,15 +95,102 @@
                 </div>
 
                 <!-- Delivery Information -->
-                @if($order->delivery_info)
+                @if($order->delivery_proof || $order->delivery_info)
                 <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
                     <h2 class="mb-4 text-xl font-bold">
                         <i class="mr-2 ri-truck-line text-[#8a2be2]"></i>
                         Delivery Information
                     </h2>
-                    <div class="p-4 rounded-lg bg-white/5">
-                        <p class="text-sm text-gray-300 whitespace-pre-wrap">{{ $order->delivery_info }}</p>
+
+                    @if($order->delivery_proof)
+                        <div class="mb-4">
+                            <h3 class="mb-2 text-sm font-semibold text-gray-400">Delivery Proof</h3>
+                            <div class="p-4 rounded-lg bg-white/5">
+                                <p class="text-sm text-gray-300 whitespace-pre-wrap">{{ $order->delivery_proof }}</p>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($order->delivery_info)
+                        <div>
+                            <h3 class="mb-2 text-sm font-semibold text-gray-400">Seller Notes</h3>
+                            <div class="p-4 rounded-lg bg-white/5">
+                                <p class="text-sm text-gray-300 whitespace-pre-wrap">{{ $order->delivery_info }}</p>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($order->delivery_uploaded_at)
+                        <p class="mt-3 text-xs text-gray-500">
+                            <i class="ri-time-line mr-1"></i>
+                            Uploaded on {{ $order->delivery_uploaded_at->format('d M Y, H:i') }}
+                        </p>
+                    @endif
+                </div>
+                @endif
+
+                <!-- Upload Delivery Form (Seller Only) -->
+                @if(auth()->id() == $order->id_seller && $order->payment_status === 'paid' && $order->order_status === 'pending')
+                <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                    <h2 class="mb-4 text-xl font-bold">
+                        <i class="mr-2 ri-upload-line text-[#8a2be2]"></i>
+                        Upload Delivery Proof
+                    </h2>
+
+                    <form action="{{ route('order.uploadDelivery', $order->id) }}" method="POST" class="space-y-4">
+                        @csrf
+
+                        <div>
+                            <label class="block mb-2 text-sm font-semibold text-gray-300">Delivery Proof *</label>
+                            <textarea name="delivery_proof" rows="4" required maxlength="1000"
+                                      class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition"
+                                      placeholder="Paste account details, login info, or any delivery information here...">{{ old('delivery_proof') }}</textarea>
+                            <p class="mt-1 text-xs text-gray-500">Example: Username: player123 | Password: pass123 | Server: Asia</p>
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm font-semibold text-gray-300">Additional Notes (Optional)</label>
+                            <textarea name="delivery_notes" rows="3" maxlength="500"
+                                      class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition"
+                                      placeholder="Add any additional notes for the buyer...">{{ old('delivery_notes') }}</textarea>
+                        </div>
+
+                        <button type="submit"
+                                class="w-full px-6 py-3 font-bold text-white transition-transform duration-200 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 hover:scale-105 active:scale-95">
+                            <i class="mr-2 ri-send-plane-fill"></i>
+                            Upload & Mark as Processing
+                        </button>
+                    </form>
+                </div>
+                @endif
+
+                <!-- Confirm Delivery Button (Buyer Only) -->
+                @if(auth()->id() == $order->id_buyer && $order->order_status === 'processing')
+                <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                    <h2 class="mb-4 text-xl font-bold">
+                        <i class="mr-2 ri-checkbox-circle-line text-green-400"></i>
+                        Confirm Receipt
+                    </h2>
+
+                    <div class="p-4 mb-4 rounded-lg bg-yellow-600/20 border border-yellow-600/50">
+                        <p class="text-sm text-yellow-300">
+                            <i class="mr-2 ri-alert-line"></i>
+                            Please check the delivery information above and make sure everything is correct before confirming.
+                        </p>
                     </div>
+
+                    <form action="{{ route('order.confirmDelivery', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you have received the product and everything is correct?')">
+                        @csrf
+                        <button type="submit"
+                                class="w-full px-6 py-3 font-bold text-white transition-transform duration-200 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 hover:scale-105 active:scale-95">
+                            <i class="mr-2 ri-check-double-line"></i>
+                            Confirm Delivery Received
+                        </button>
+                    </form>
+
+                    <p class="mt-3 text-xs text-center text-gray-500">
+                        By confirming, you acknowledge that you've received the product and the order will be marked as completed.
+                    </p>
                 </div>
                 @endif
 

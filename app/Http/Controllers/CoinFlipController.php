@@ -124,7 +124,7 @@ class CoinFlipController extends Controller
         return view('coinflip.result', compact('coinFlip'));
     }
 
-    public function payRemaining($id)
+    public function payRemaining(Request $request, $id)
     {
         $coinFlip = CoinFlipGame::findOrFail($id);
         $user = Auth::user();
@@ -143,6 +143,11 @@ class CoinFlipController extends Controller
         if ($coinFlip->buyer_paid) {
             return redirect()->back()->with('info', 'Payment already completed.');
         }
+
+        // Validate buyer notes
+        $request->validate([
+            'buyer_notes' => 'nullable|string|max:500',
+        ]);
 
         $remainingPayment = $coinFlip->getRemainingPayment();
         $wallet = $user->wallet;
@@ -185,6 +190,7 @@ class CoinFlipController extends Controller
                 'id_product' => $negotiation->id_product,
                 'id_buyer' => $coinFlip->id_buyer,
                 'id_seller' => $coinFlip->id_seller,
+                'id_negotiation' => $negotiation->id,
                 'quantity' => 1,
                 'original_price' => $negotiation->product->getCurrentPrice(), // Original product price
                 'final_price' => $coinFlip->final_price,
@@ -192,6 +198,7 @@ class CoinFlipController extends Controller
                 'payment_method' => 'wallet',
                 'payment_status' => 'paid',
                 'order_status' => 'pending',
+                'buyer_notes' => $request->input('buyer_notes'),
             ]);
 
             // Update product stock

@@ -68,26 +68,50 @@ class NegotiationController extends Controller
             return redirect()->back()->with('error', 'This product is not available for negotiation.');
         }
 
-        // Check if active negotiation already exists (ongoing, accepted, or unpaid coinflip)
-        $existingNego = Negotiation::where('id_product', $productId)
+        // Check if there's already an ongoing negotiation
+        $ongoingNego = Negotiation::where('id_product', $productId)
             ->where('id_buyer', $user->id)
-            ->whereIn('status', ['ongoing', 'accepted'])
+            ->where('status', 'ongoing')
             ->first();
 
-        // Also check for unpaid coin flip
-        if (!$existingNego) {
-            $existingNego = Negotiation::where('id_product', $productId)
-                ->where('id_buyer', $user->id)
-                ->where('status', 'coinflip')
-                ->whereHas('coinFlipGame', function($q) {
-                    $q->where('buyer_paid', false);
-                })
-                ->first();
+        if ($ongoingNego) {
+            return redirect()->route('negotiation.show', $ongoingNego->id)
+                ->with('info', 'You already have an ongoing negotiation for this product.');
         }
 
-        if ($existingNego) {
-            return redirect()->route('negotiation.show', $existingNego->id)
-                ->with('info', 'You already have an ongoing negotiation for this product.');
+        // Check for accepted but not yet paid (no order created)
+        $acceptedNego = Negotiation::where('id_product', $productId)
+            ->where('id_buyer', $user->id)
+            ->where('status', 'accepted')
+            ->first();
+
+        if ($acceptedNego) {
+            // Check if order already created (payment completed)
+            $hasOrder = Order::where('id_product', $productId)
+                ->where('id_buyer', $user->id)
+                ->where('payment_status', 'paid')
+                ->exists();
+
+            if (!$hasOrder) {
+                // Accepted but not paid yet - block new negotiation
+                return redirect()->route('negotiation.show', $acceptedNego->id)
+                    ->with('info', 'Please complete payment for your accepted offer first.');
+            }
+            // Has order = paid = allow new negotiation
+        }
+
+        // Check for unpaid coin flip
+        $coinflipNego = Negotiation::where('id_product', $productId)
+            ->where('id_buyer', $user->id)
+            ->where('status', 'coinflip')
+            ->whereHas('coinFlipGame', function($q) {
+                $q->where('buyer_paid', false);
+            })
+            ->first();
+
+        if ($coinflipNego) {
+            return redirect()->route('negotiation.show', $coinflipNego->id)
+                ->with('info', 'Please complete your coin flip game first.');
         }
 
         return view('negotiation.create', compact('product'));
@@ -210,7 +234,7 @@ class NegotiationController extends Controller
             ->with('success', 'Offer accepted! Please proceed to payment.');
     }
 
-    public function payAcceptedOffer($id)
+    public function payAcceptedOffer(Request $request, $id)
     {
         $negotiation = Negotiation::findOrFail($id);
         $user = Auth::user();
@@ -224,6 +248,11 @@ class NegotiationController extends Controller
         if ($negotiation->status != 'accepted') {
             return redirect()->back()->with('error', 'Negotiation must be accepted first.');
         }
+
+        // Validate buyer notes
+        $request->validate([
+            'buyer_notes' => 'nullable|string|max:500',
+        ]);
 
         // Determine final price
         $finalPrice = $negotiation->latest_seller_offer ?? $negotiation->latest_buyer_offer;
@@ -253,6 +282,7 @@ class NegotiationController extends Controller
                 'id_product' => $negotiation->id_product,
                 'id_buyer' => $negotiation->id_buyer,
                 'id_seller' => $negotiation->id_seller,
+                'id_negotiation' => $negotiation->id,
                 'quantity' => 1,
                 'original_price' => $negotiation->product->getCurrentPrice(), // Original product price
                 'final_price' => $finalPrice,
@@ -260,6 +290,7 @@ class NegotiationController extends Controller
                 'payment_method' => 'wallet',
                 'payment_status' => 'paid',
                 'order_status' => 'pending',
+                'buyer_notes' => $request->input('buyer_notes'),
             ]);
 
             // Update product stock

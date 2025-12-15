@@ -91,8 +91,18 @@
                     </div>
                 </div>
 
-                <form action="{{ route('coinflip.payRemaining', $coinFlip->id) }}" method="POST">
+                <form action="{{ route('coinflip.payRemaining', $coinFlip->id) }}" method="POST" class="space-y-4">
                     @csrf
+                    <div class="text-left">
+                        <label class="block mb-2 text-sm font-semibold text-gray-300">
+                            <i class="ri-information-line mr-1"></i>
+                            Account Information (Optional)
+                        </label>
+                        <textarea name="buyer_notes" rows="3" maxlength="500"
+                                  class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition text-sm"
+                                  placeholder="Player ID, Server, or any information needed for delivery...">{{ old('buyer_notes') }}</textarea>
+                        <p class="mt-1 text-xs text-gray-500">Example: Player ID: 123456789 | Server: Asia</p>
+                    </div>
                     <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl hover:scale-105 transition">
                         Pay Remaining Amount
                     </button>
