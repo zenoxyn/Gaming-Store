@@ -9,9 +9,18 @@
         {{-- Product Card --}}
         <div class="mb-6 p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">
             <div class="flex items-center gap-6">
-                <img src="{{ asset('storage/' . json_decode($product->images)[0]) }}"
-                     alt="{{ $product->name }}"
-                     class="w-32 h-32 object-cover rounded-xl">
+                @php
+                    $productImages = is_array($product->images) ? $product->images : json_decode($product->images, true);
+                @endphp
+                @if(!empty($productImages))
+                    <img src="{{ asset('storage/' . $productImages[0]) }}"
+                         alt="{{ $product->name }}"
+                         class="w-32 h-32 object-cover rounded-xl">
+                @else
+                    <div class="w-32 h-32 flex items-center justify-center bg-gradient-to-br from-purple-900 to-purple-700 rounded-xl text-4xl">
+                        🎮
+                    </div>
+                @endif
                 <div>
                     <h2 class="text-2xl font-bold text-white">{{ $product->name }}</h2>
                     <p class="text-gray-400 mt-2">{{ $product->category->name }}</p>
