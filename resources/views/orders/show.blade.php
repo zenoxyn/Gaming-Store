@@ -7,6 +7,20 @@
             <span>Back to Orders</span>
         </a>
 
+        <!-- Success/Error Messages -->
+        @if(session('success'))
+            <div class="p-4 mb-6 text-green-400 bg-green-600/20 border border-green-600/50 rounded-xl flex items-center gap-2">
+                <i class="ri-check-line text-lg"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="p-4 mb-6 text-red-400 bg-red-600/20 border border-red-600/50 rounded-xl flex items-center gap-2">
+                <i class="ri-error-warning-line text-lg"></i>
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
             <!-- Main Content -->
@@ -19,6 +33,9 @@
                             <h1 class="text-2xl font-bold">Order #{{ $order->id }}</h1>
                             <p class="text-sm text-gray-400">Placed on {{ $order->created_at->format('d F Y, H:i') }}</p>
                         </div>
+
+
+
                         @php
                             $statusColors = [
                                 'pending' => 'bg-yellow-600 text-white',
@@ -64,6 +81,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Product Details -->
                 <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
@@ -194,26 +212,80 @@
                 </div>
                 @endif
 
-                <!-- Notes -->
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    @if($order->buyer_notes)
-                    <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
-                        <h3 class="mb-2 font-semibold">
-                            <i class="mr-2 ri-chat-3-line text-blue-400"></i>
-                            Buyer Notes
-                        </h3>
-                        <p class="text-sm text-gray-300">{{ $order->buyer_notes }}</p>
-                    </div>
-                    @endif
+                <!-- Review Section -->
+                <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                    <h2 class="mb-4 text-xl font-bold">
+                        <i class="mr-2 ri-star-smile-line text-yellow-400"></i>
+                        Review Seller
+                    </h2>
 
-                    @if($order->seller_notes)
-                    <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
-                        <h3 class="mb-2 font-semibold">
-                            <i class="mr-2 ri-store-line text-green-400"></i>
-                            Seller Notes
-                        </h3>
-                        <p class="text-sm text-gray-300">{{ $order->seller_notes }}</p>
-                    </div>
+                    @if($order->review)
+                        <!-- Show submitted review -->
+                        <div class="mb-2 flex items-center gap-2">
+                            <span class="text-yellow-400 font-bold text-lg">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <i class="{{ $i <= $order->review->rating ? 'ri-star-fill' : 'ri-star-line' }}"></i>
+                                @endfor
+                            </span>
+                            <span class="text-sm text-gray-400">({{ $order->review->rating }}/5)</span>
+                        </div>
+                        <div class="p-4 rounded-lg bg-white/5 mb-2">
+                            <p class="text-gray-200 text-sm whitespace-pre-line">{{ $order->review->review }}</p>
+                        </div>
+                        <div class="text-xs text-gray-500 mb-1">Reviewed on {{ $order->review->created_at->format('d M Y, H:i') }}</div>
+                        @if(auth()->id() == $order->id_buyer)
+                            <div class="text-green-400 text-xs font-semibold flex items-center gap-1"><i class="ri-check-line"></i>Thank you for your feedback!</div>
+                        @endif
+                        @elseif(auth()->id() == $order->id_buyer && $order->canBeReviewed())
+                        <!-- Show review form for buyer -->
+                        <form action="{{ route('orders.review.store', $order->id) }}" method="POST" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label class="block mb-2 text-sm font-semibold text-gray-300">Rating *</label>
+                                <div class="flex flex-row-reverse items-center justify-end gap-1">
+                                    <div class="flex flex-row-reverse justify-center">
+                                        @for ($i = 5; $i >= 1; $i--)
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                id="star{{ $i }}"
+                                                value="{{ $i }}"
+                                                class="peer hidden"
+                                                {{ old('rating') == $i ? 'checked' : '' }}
+                                                required
+                                            />
+
+                                            <label
+                                                for="star{{ $i }}"
+                                                class="cursor-pointer text-2xl text-gray-400
+                                                    peer-checked:text-yellow-400
+                                                    hover:text-yellow-400
+                                                    hover:peer-checked:text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                            </label>
+                                        @endfor
+                                    </div>
+                                </div>
+                                @error('rating')
+                                    <div class="text-xs text-red-400 mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-semibold text-gray-300">Review *</label>
+                                <textarea name="review" rows="3" maxlength="1000" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition" placeholder="Share your experience with the seller...">{{ old('review') }}</textarea>
+                                @error('review')
+                                    <div class="text-xs text-red-400 mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 font-bold text-white transition-transform duration-200 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-400 hover:scale-105 active:scale-95">
+                                <i class="mr-2 ri-star-smile-line"></i>
+                                Submit Review
+                            </button>
+                        </form>
+                    @elseif(auth()->id() == $order->id_buyer && $order->order_status === 'completed')
+                        <div class="text-gray-400 text-sm">You have already submitted a review for this order.</div>
+                    @elseif(auth()->id() == $order->id_seller && $order->review)
+                        <div class="text-green-400 text-xs font-semibold flex items-center gap-1"><i class="ri-check-line"></i>This order has been reviewed by the buyer.</div>
                     @endif
                 </div>
 
@@ -349,6 +421,29 @@
                         </div>
                         @endif
                     </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="flex flex-col gap-6">
+                    @if($order->buyer_notes)
+                    <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                        <h3 class="mb-2 font-semibold">
+                            <i class="mr-2 ri-chat-3-line text-blue-400"></i>
+                            Buyer Notes
+                        </h3>
+                        <p class="text-sm text-gray-300">{{ $order->buyer_notes }}</p>
+                    </div>
+                    @endif
+
+                    @if($order->seller_notes)
+                    <div class="p-6 border rounded-2xl bg-[#2d1b4e]/90 border-[#8a2be2]/30">
+                        <h3 class="mb-2 font-semibold">
+                            <i class="mr-2 ri-store-line text-green-400"></i>
+                            Seller Notes
+                        </h3>
+                        <p class="text-sm text-gray-300">{{ $order->seller_notes }}</p>
+                    </div>
+                    @endif
                 </div>
 
             </div>

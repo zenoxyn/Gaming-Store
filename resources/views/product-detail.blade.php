@@ -250,7 +250,11 @@
                                     </div>
                                     <span class="text-xs text-gray-400">{{ $review->created_at->diffForHumans() }}</span>
                                 </div>
-                                <p class="text-sm text-gray-300">{{ $review->comment }}</p>
+                                @if($review->review)
+                                    <p class="text-sm text-gray-300">{{ $review->review }}</p>
+                                @else
+                                    <p class="text-sm italic text-gray-400">No written review</p>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SellerVerificationController;
 use Illuminate\Support\Facades\Auth;
+use \App\Http\Controllers\ReviewController;
 
 // Public Routes
 Route::get('/', [ProductController::class, 'index'])->name('home');
@@ -42,6 +43,10 @@ Route::get('/search', [ProductController::class, 'search'])->name('products.sear
 
 // Midtrans Callback (No auth - called by Midtrans server)
 Route::post('/wallet/callback', [WalletController::class, 'callback'])->name('wallet.callback');
+
+// Review Routes
+Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('orders.review.store');
+
 
 // Testing Routes
 Route::get('/test', [TestController::class, 'index']);

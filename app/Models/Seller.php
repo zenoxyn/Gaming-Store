@@ -16,6 +16,8 @@ class Seller extends Model
         'bank_account_name',
         'verification_status',
         'verified_at',
+        'rating',
+        'total_reviews',
     ];
 
     protected function casts(): array
