@@ -162,17 +162,11 @@ class CoinFlipController extends Controller
         try {
             // Calculate platform fee first
             $platformFee = $coinFlip->final_price * 0.03; // 3% platform fee
-            $sellerAmount = $coinFlip->final_price - $platformFee;
 
             // Deduct remaining payment from buyer
             $wallet->deductBalance($remainingPayment, 'purchase', 'Coin Flip Final Payment - Negotiation #' . $coinFlip->id_negotiation);
 
-            // Add payment to seller (final price minus platform fee)
-            $sellerWallet = Wallet::firstOrCreate(
-                ['id_user' => $coinFlip->id_seller],
-                ['balance' => 0]
-            );
-            $sellerWallet->addBalance($sellerAmount, 'sale', 'Sale from Coin Flip - Negotiation #' . $coinFlip->id_negotiation);
+            // (Saldo seller BELUM masuk di sini)
 
             // Update coin flip status
             $coinFlip->buyer_paid = true;

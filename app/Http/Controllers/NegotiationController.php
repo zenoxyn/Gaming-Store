@@ -268,16 +268,9 @@ class NegotiationController extends Controller
             // Deduct from buyer wallet
             $buyerWallet->deductBalance($finalPrice, 'purchase', 'Product purchase from negotiation #' . $negotiation->id);
 
-            // Add to seller wallet
-            $sellerWallet = Wallet::firstOrCreate(
-                ['id_user' => $negotiation->id_seller],
-                ['balance' => 0]
-            );
+            // Create order (saldo seller BELUM masuk)
             $platformFee = $finalPrice * 0.03; // 3% platform fee
-            $sellerAmount = $finalPrice - $platformFee;
-            $sellerWallet->addBalance($sellerAmount, 'sale', 'Product sale from negotiation #' . $negotiation->id);
-
-            // Create order
+            // ...existing code...
             $order = Order::create([
                 'id_product' => $negotiation->id_product,
                 'id_buyer' => $negotiation->id_buyer,

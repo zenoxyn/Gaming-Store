@@ -108,15 +108,7 @@ class OrderController extends Controller
             // Deduct from buyer wallet
             $buyerWallet->deductBalance($price, 'purchase', 'Direct purchase - Product #' . $product->id);
 
-            // Add to seller wallet (minus platform fee)
-            $sellerWallet = Wallet::firstOrCreate(
-                ['id_user' => $product->seller->id_user],
-                ['balance' => 0]
-            );
-            $sellerAmount = $price - $platformFee;
-            $sellerWallet->addBalance($sellerAmount, 'sale', 'Product sale - Direct purchase #' . $product->id);
-
-            // Create order
+            // Create order (saldo seller BELUM masuk)
             $order = Order::create([
                 'id_product' => $product->id,
                 'id_buyer' => $user->id,
@@ -194,11 +186,26 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Cannot confirm delivery for this order status.');
         }
 
-        $order->update([
-            'order_status' => 'completed',
-            'completed_at' => now(),
-        ]);
+        DB::beginTransaction();
+        try {
+            $order->update([
+                'order_status' => 'completed',
+                'completed_at' => now(),
+            ]);
 
-        return redirect()->back()->with('success', 'Order completed! Thank you for your confirmation.');
+            // Tambah saldo seller (escrow release) - berlaku untuk semua order (direct, nego, coinflip)
+            $sellerWallet = \App\Models\Wallet::firstOrCreate(
+                ['id_user' => $order->id_seller],
+                ['balance' => 0]
+            );
+            $sellerAmount = $order->final_price - $order->platform_fee;
+            $sellerWallet->addBalance($sellerAmount, 'sale', 'Product sale - Order #' . $order->id, $order->id);
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Order completed! Thank you for your confirmation.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to complete order: ' . $e->getMessage());
+        }
     }
 }

@@ -258,6 +258,17 @@
                                     <span class="text-xl font-bold text-green-400">Rp {{ number_format($netAmount, 0, ',', '.') }}</span>
                                 </div>
                             </div>
+                            @if($order->order_status !== 'completed')
+                                <div class="p-3 mt-4 rounded-lg bg-yellow-600/20 border border-yellow-600/50 flex items-center gap-2">
+                                    <i class="ri-lock-line text-yellow-500 text-lg"></i>
+                                    <span class="text-sm text-yellow-300 font-semibold">Funds are being held in escrow. Money will be released to your wallet after the buyer confirms order completion.</span>
+                                </div>
+                            @else
+                                <div class="p-3 mt-4 rounded-lg bg-green-600/20 border border-green-600/50 flex items-center gap-2">
+                                    <i class="ri-wallet-3-line text-green-400 text-lg"></i>
+                                    <span class="text-sm text-green-300 font-semibold">Funds have been released and transferred to your wallet. Thank you for using our platform!</span>
+                                </div>
+                            @endif
                         @endif
                     </div>
 
