@@ -8,6 +8,7 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\NegotiationController;
 use App\Http\Controllers\CoinFlipController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Seller\ApplicationController;
 use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -47,6 +48,11 @@ Route::post('/wallet/callback', [WalletController::class, 'callback'])->name('wa
 // Review Routes
 Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('orders.review.store');
 
+// Chat Routes
+Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+Route::get('/chat/{id}', [ChatController::class, 'show'])->name('chat.show');
+Route::get('/chat/product/{productId}/create', [ChatController::class, 'create'])->name('chat.create');
+Route::post('/chat/{id}/message', [ChatController::class, 'storeMessage'])->name('chat.message.send');
 
 // Testing Routes
 Route::get('/test', [TestController::class, 'index']);

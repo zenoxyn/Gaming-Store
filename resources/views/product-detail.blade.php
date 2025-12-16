@@ -359,10 +359,11 @@
                             <div class="text-2xl font-bold text-yellow-400" id="desktopTotalPrice">Rp {{ number_format($product->getCurrentPrice(), 0, ',', '.') }}</div>
                             @if($product->discount_price && $product->discount_price < $product->price)
                                 <div class="text-base text-gray-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
-                                <div class="px-2 py-1 text-xs font-bold rounded bg-red-600">-{{ round((($product->price - $product->discount_price) / $product->price) * 100) }}%</div>
+                                <div class="px-2 py-1 text-xs font-bold rounded bg-red-600">-{{ round((($product->price - $product->discount_price) / $product->price) * 100) }}%
+                                </div>
                             @endif
+                            </div>
                         </div>
-                    </div>
 
                     <!-- Quantity & Buy Button -->
                     <div class="px-6 pb-6">
@@ -390,11 +391,27 @@
                                     </button>
                                 @endif
                             @else
-                                <a href="{{ route('login') }}" class="flex-1 py-3 font-semibold text-white text-center transition-transform duration-200 rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 active:scale-95 block">
+                                <a href="{{ route('login') }}" class="flex-1 py-3 font-semibold text-white text-center transition-transform duration-200 rounded-lg cursor-pointer bg-linear-to-r from-purple-600 to-pink-600 hover:scale-105 active:scale-95 block">
                                     <i class="ri-shopping-cart-line mr-2"></i>Buy Now
                                 </a>
                             @endauth
                         </div>
+
+                        <!-- Chat & Negotiate Buttons -->
+                        {{-- Chat Button (Only for buyers, not sellers viewing their own product) --}}
+                        @auth
+                            @if(auth()->user()->canBuy() && $product->id_seller !== auth()->id() && $product->status === 'available')
+                                <a href="{{ route('chat.create', $product->id) }}"
+                                   class="block w-full py-3 mt-3 font-semibold text-center transition border rounded-lg border-purple-500/40 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400">
+                                    <i class="ri-chat-3-line mr-2"></i>Chat With Seller
+                                </a>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}"
+                               class="block w-full py-3 mt-3 font-semibold text-center transition border rounded-lg border-purple-500/40 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400">
+                                <i class="ri-chat-3-line mr-2"></i>Chat With Seller
+                            </a>
+                        @endauth
 
                         {{-- Negotiate Button (Only for buyers, not sellers viewing their own product) --}}
                         @auth
@@ -404,6 +421,11 @@
                                     <i class="ri-chat-3-line mr-2"></i>Negotiate Price
                                 </a>
                             @endif
+                        @else
+                            <a href="{{ route('login') }}"
+                               class="block w-full py-3 mt-3 font-semibold text-center transition border rounded-lg border-yellow-500/40 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400">
+                                <i class="ri-chat-3-line mr-2"></i>Negotiate Price
+                            </a>
                         @endauth
                     </div>
 
@@ -529,7 +551,7 @@
     </div>
 
     <!-- Floating Chat Button (Mobile) -->
-    <button onclick="openChat()" class="fixed z-30 flex items-center justify-center w-14 h-14 text-2xl text-white transition shadow-2xl rounded-full lg:hidden bottom-24 right-4 bg-linear-to-br from-[#8a2be2] to-[#ff1493] hover:scale-110 active:scale-95">
+    <button onclick="location.href='{{ route('chat.create', $product->id) }}'" class="fixed z-30 flex items-center justify-center w-14 h-14 text-2xl text-white transition shadow-2xl rounded-full lg:hidden bottom-24 right-4 bg-linear-to-br from-[#8a2be2] to-[#ff1493] hover:scale-110 active:scale-95">
         <i class="fas fa-comments"></i>
     </button>
 

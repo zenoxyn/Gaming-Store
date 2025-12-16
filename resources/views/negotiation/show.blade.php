@@ -62,7 +62,7 @@
             </h3>
 
             <div class="space-y-4 max-h-96 overflow-y-auto">
-                @foreach($negotiation->offers->reverse() as $offer)
+                @foreach($negotiation->offers as $offer)
                     <div class="flex {{ $offer->id_sender == auth()->id() ? 'justify-end' : 'justify-start' }}">
                         <div class="max-w-md">
                             <div class="flex items-center gap-2 mb-1 {{ $offer->id_sender == auth()->id() ? 'justify-end' : 'justify-start' }}">

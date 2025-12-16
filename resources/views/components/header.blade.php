@@ -1,7 +1,7 @@
 <!-- Top Message -->
-<div class="bg-[#140532] text-center py-2 text-xs font-small text-orange-400">
+{{-- <div class="bg-[#140532] text-center py-2 text-xs font-small text-orange-400">
   🌟 Help us to make FRYN Better 🌟
-</div>
+</div> --}}
 
 <nav class="bg-[#11042A] shadow-md px-4 py-2 text-white">
   <div class="max-w-6xl mx-auto">
@@ -29,7 +29,7 @@
             Sell Item
           </a>
         @endif
-        <a href="#" class="px-2 py-1.5 m-1 rounded-xl hover:bg-purple-600/20 transition">
+        <a href="{{ route('chat.index') }}" class="px-2 py-1.5 m-1 rounded-xl hover:bg-purple-600/20 transition">
           <i class="ri-message-2-line text-2xl"></i>
         </a>
         <a href="#" class="px-2 py-1.5 m-1 rounded-xl hover:bg-purple-600/20 transition">
