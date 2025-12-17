@@ -14,6 +14,7 @@ use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SellerVerificationController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\ReviewController;
 
@@ -176,5 +177,16 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/sellers/verification', [SellerVerificationController::class, 'index'])->name('admin.sellers.verification');
         Route::post('admin/sellers/{id}/approve', [SellerVerificationController::class, 'approve'])->name('admin.sellers.approve');
         Route::post('admin/sellers/{id}/reject', [SellerVerificationController::class, 'reject'])->name('admin.sellers.reject');
+
+        // User Management
+        Route::resource('admin/users', AdminUserController::class)->names([
+            'index' => 'admin.users.index',
+            'create' => 'admin.users.create',
+            'store' => 'admin.users.store',
+            'edit' => 'admin.users.edit',
+            'update' => 'admin.users.update',
+            'destroy' => 'admin.users.destroy',
+        ]);
+        Route::patch('admin/users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('admin.users.toggleStatus');
     });
 });

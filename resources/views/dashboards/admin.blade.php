@@ -109,7 +109,7 @@
                         </div>
                     </a>
 
-                    <a href="# " class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
+                    <a href="{{ route('admin.users.index') }}" class="block p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
                         <div class="flex items-center gap-4">
                             <div class="w-16 h-16 rounded-xl bg-blue-500/20 border border-blue-500/50 flex items-center justify-center group-hover:scale-110 transition">
                                 <i class="ri-user-line text-3xl text-blue-400"></i>
