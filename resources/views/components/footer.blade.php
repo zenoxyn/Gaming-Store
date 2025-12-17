@@ -42,20 +42,20 @@
             <!-- tambahan -->
             <div class=""></div>
             <!-- nara hubung -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 font-bold">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 font-bold">
                 <!-- Buy & Sell -->
-                <div >
+                <div class="md:col-span-2 md:max-w-lg">
                     <h3 class="text-xl font-semibold text-white mb-4">Buy & Sell</h3>
                     <ul class="space-y-3 text-md warna-text">
-                        <li><a href="#" class="hover:text-white cursor-pointer">YOII</a></li>
-                        <li><a href="#" class="hover:text-white cursor-pointer">JOSJISS</a></li>
-                        <li><a href="#" class="hover:text-white cursor-pointer">WAYAHE</a></li>
-                        <li><a href="#" class="hover:text-white cursor-pointer">MONGGO</a></li>
+                        <li><a href="#" class="hover:text-white cursor-pointer">FRYN Guarante</a></li>
+                        <li><a href="#" class="hover:text-white cursor-pointer">Buying Question</a></li>
+                        <li><a href="#" class="hover:text-white cursor-pointer">Selling Question</a></li>
+                        <li><a href="#" class="hover:text-white cursor-pointer">Why Sell With Us?</a></li>
                     </ul>
                 </div>
 
                 <!-- Resources -->
-                <div >
+                <div  class="md:col-span-2 md:max-w-lg">
                     <h3 class="text-xl font-semibold text-white mb-4">Resources</h3>
                     <ul class="space-y-3 text-md warna-text">
                         <li><a href="#" class="hover:text-white cursor-pointer">About Us</a></li>

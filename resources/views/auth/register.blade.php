@@ -14,10 +14,10 @@
 
 
         <!-- Card Register -->
-        <div class="relative z-10 w-[900px] mt-15 rounded-2xl flex overflow-hidden shadow-2xl glass-effect animate-slide-in">
+        <div class="relative z-10 w-md sm:w-xl md:w-2xl lg:w-4xl mt-4 rounded-2xl flex overflow-hidden shadow-2xl glass-effect animate-slide-in">
 
             <!-- Kiri (Poster / Gambar) -->
-            <div class="relative w-1/2 group bg-image-dim">
+            <div class="hidden sm:block relative w-full sm:w-1/2 group bg-image-dim">
                 <div class="absolute inset-0 bg-purple-600/25 group-hover:opacity-40 transition-opacity duration-500 z-10 flex items-center justify-center">
                     <img src="{{ asset('images/icons/logo.png') }}" alt=""class="opacity-30">
                 </div>
@@ -33,7 +33,7 @@
             </div>
 
             <!-- Kanan (Form Registrasi) -->
-            <div class="w-1/2 p-12 text-white bg-linear-to-br from-[#2C1450] to-[#1a0b2e]">
+            <div class="w-full sm:w-1/2  p-12 text-white bg-linear-to-br from-[#2C1450] to-[#1a0b2e]">
                 <div class="flex justify-between items-center mb-8">
                     <div>
                         <h2 class="text-3xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">Create Account</h2>
