@@ -135,7 +135,7 @@ class NegotiationController extends Controller
                 'id_buyer' => $user->id,
                 'id_seller' => $product->seller->id_user,
                 'latest_buyer_offer' => $request->offered_price,
-                'latest_seller_offer' => $product->price,
+                'latest_seller_offer' => $product->price->discount_price ?? $product->price,
                 'status' => 'ongoing',
                 'expires_at' => now()->addDay(),
             ]);

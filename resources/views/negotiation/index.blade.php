@@ -28,7 +28,14 @@
                        class="block p-3 md:p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 transition group">
                         <div class="flex flex-col sm:flex-row sm:items-center gap-3 md:gap-6">
                             {{-- Product Image --}}
-                            <img src="{{ asset('storage/' . $nego->product->images[0]) }}"
+                            @php
+                                $imageUrl = !empty($nego->product->images) && isset($nego->product->images[0])
+                                    ? (str_starts_with($nego->product->images[0], 'http')
+                                        ? $nego->product->images[0]
+                                        : asset('storage/' . $nego->product->images[0]))
+                                    : asset('images/icon/logo.png');
+                            @endphp
+                            <img src="{{ $imageUrl }}"
                                  alt="{{ $nego->product->name }}"
                                  class="w-60 h-xs md:w-50 md:h-xs object-cover rounded-xl mx-auto sm:mx-0">
 

@@ -50,7 +50,7 @@
                             <tr class="transition hover:bg-white/5">
                                 <td class="px-6 py-4">
                                     @if($category->icon)
-                                        <img src="{{ asset('storage/' . $category->icon) }}" alt="{{ $category->name }}" class="object-cover w-12 h-12 rounded-lg">
+                                        <img src="{{ str_starts_with($category->icon, 'http') ? $category->icon : asset('storage/' . $category->icon) }}" alt="{{ $category->name }}" class="object-cover w-12 h-12 rounded-lg">
                                     @else
                                         <div class="flex items-center justify-center w-12 h-12 text-2xl rounded-lg bg-linear-to-br from-[#8a2be2] to-[#ff1493]">
                                             🎮

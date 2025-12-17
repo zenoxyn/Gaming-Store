@@ -35,7 +35,7 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'slug' => 'nullable|string|max:100|unique:categories,slug',
-            'icon' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
+            'icon' => 'nullable|file|max:2048',
             'description' => 'nullable|string',
             'spec_template' => 'nullable|json',
         ]);
@@ -47,7 +47,15 @@ class CategoryController extends Controller
 
         // Handle icon upload
         if ($request->hasFile('icon')) {
-            $iconPath = $request->file('icon')->store('categories', 'public');
+            $file = $request->file('icon');
+            $extension = strtolower($file->getClientOriginalExtension());
+
+            // Validate extension manually
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'])) {
+                return back()->withErrors(['icon' => 'File must be an image (jpg, jpeg, png, webp)']);
+            }
+
+            $iconPath = $file->store('categories', 'public');
             $validated['icon'] = $iconPath;
         }
 
@@ -78,7 +86,7 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'slug' => 'nullable|string|max:100|unique:categories,slug,' . $category->id,
-            'icon' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
+            'icon' => 'nullable|file|max:2048',
             'description' => 'nullable|string',
             'spec_template' => 'nullable|json',
         ]);
@@ -90,12 +98,20 @@ class CategoryController extends Controller
 
         // Handle icon upload
         if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            $extension = strtolower($file->getClientOriginalExtension());
+
+            // Validate extension manually
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'])) {
+                return back()->withErrors(['icon' => 'File must be an image (jpg, jpeg, png, webp)']);
+            }
+
             // Delete old icon if exists
-            if ($category->icon && Storage::disk('public')->exists($category->icon)) {
+            if ($category->icon && !str_starts_with($category->icon, 'http') && Storage::disk('public')->exists($category->icon)) {
                 Storage::disk('public')->delete($category->icon);
             }
 
-            $iconPath = $request->file('icon')->store('categories', 'public');
+            $iconPath = $file->store('categories', 'public');
             $validated['icon'] = $iconPath;
         }
 

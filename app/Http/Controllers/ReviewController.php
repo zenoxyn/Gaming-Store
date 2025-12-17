@@ -16,7 +16,7 @@ class ReviewController extends Controller
         $user = Auth::user();
 
         // Only buyer can review, only after completed, only if not reviewed yet
-        if ($order->id_buyer !== $user->id || $order->order_status !== 'completed') {
+        if (!$user || $order->id_buyer != $user->id || $order->order_status != 'completed') {
             abort(403, 'Unauthorized');
         }
         if (Review::where('id_order', $order->id)->exists()) {

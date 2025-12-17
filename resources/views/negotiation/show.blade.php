@@ -23,9 +23,17 @@
         {{-- Product Info Card --}}
         <div class="mb-6 p-6 bg-linear-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl">
             <div class="flex items-center gap-6">
-                <img src="{{ asset('storage/' . $negotiation->product->images[0]) }}"
-                     alt="{{ $negotiation->product->name }}"
-                     class="w-32 h-32 object-cover rounded-xl">
+                {{-- Product Image --}}
+                @php
+                    $imageUrl = !empty($negotiation->product->images) && isset($negotiation->product->images[0])
+                        ? (str_starts_with($negotiation->product->images[0], 'http')
+                            ? $negotiation->product->images[0]
+                            : asset('storage/' . $negotiation->product->images[0]))
+                        : asset('images/icon/logo.png');
+                @endphp
+                    <img src="{{ $imageUrl }}"
+                    alt="{{ $negotiation->product->name }}"
+                    class="w-32 h-32 object-cover rounded-xl">
                 <div class="flex-1">
                     <h2 class="text-2xl font-bold text-white">{{ $negotiation->product->name }}</h2>
                     <p class="text-gray-300 mt-2">{{ $negotiation->product->category->name }}</p>

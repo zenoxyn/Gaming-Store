@@ -513,12 +513,12 @@
 
             <!-- Quantity Controls -->
             <div class="flex items-center border-2 rounded-lg border-[#8a2be2]/30">
-                <button onclick="decreaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
+                <button onclick="decreaseQuantity()" class="px-2 py-1.5 transition cursor-pointer hover:bg-white/5">
                     <i class="fas fa-minus text-xs"></i>
                 </button>
                 <input type="number" id="mobileQuantity" value="1" min="1" max="{{ $product->stock }}" readonly
-                    class="flex-1 text-center bg-transparent text-white font-semibold border-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
-                <button onclick="increaseQuantity()" class="px-3 py-2 transition cursor-pointer hover:bg-white/5">
+                    class="w-10 text-center bg-transparent text-white text-sm font-semibold border-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                <button onclick="increaseQuantity()" class="px-2 py-1.5 transition cursor-pointer hover:bg-white/5">
                     <i class="fas fa-plus text-xs"></i>
                 </button>
             </div>
@@ -551,9 +551,17 @@
     </div>
 
     <!-- Floating Chat Button (Mobile) -->
-    <button onclick="location.href='{{ route('chat.create', $product->id) }}'" class="fixed z-30 flex items-center justify-center w-14 h-14 text-2xl text-white transition shadow-2xl rounded-full lg:hidden bottom-24 right-4 bg-linear-to-br from-[#8a2be2] to-[#ff1493] hover:scale-110 active:scale-95">
-        <i class="fas fa-comments"></i>
-    </button>
+    @auth
+        @if(auth()->user()->canBuy() && $product->id_seller !== auth()->id() && $product->status === 'available')
+            <button onclick="location.href='{{ route('chat.create', $product->id) }}'" class="fixed z-30 flex items-center justify-center w-14 h-14 text-2xl text-white transition shadow-2xl rounded-full lg:hidden bottom-24 right-4 bg-gradient-to-br from-[#8a2be2] to-[#ff1493] hover:scale-110 active:scale-95">
+                <i class="fas fa-comments"></i>
+            </button>
+        @endif
+    @else
+        <button onclick="location.href='{{ route('login') }}'" class="fixed z-30 flex items-center justify-center w-14 h-14 text-2xl text-white transition shadow-2xl rounded-full lg:hidden bottom-24 right-4 bg-gradient-to-br from-[#8a2be2] to-[#ff1493] hover:scale-110 active:scale-95">
+            <i class="fas fa-comments"></i>
+        </button>
+    @endauth
 
     <!-- Similar Items -->
     <div class="px-4 mx-auto mt-8 mb-8 lg:px-6 lg:mt-16 lg:mb-16 max-w-7xl">

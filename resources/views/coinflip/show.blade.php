@@ -17,7 +17,16 @@
         {{-- Product Info --}}
         <div class="mb-6 p-6 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl">
             <div class="flex items-center gap-4">
-                <img src="{{ asset('storage/' . json_decode($coinFlip->negotiation->product->images)[0]) }}"
+                @php
+                    $images = is_array($coinFlip->negotiation->product->images) 
+                        ? $coinFlip->negotiation->product->images 
+                        : json_decode($coinFlip->negotiation->product->images, true);
+                    $firstImage = !empty($images) && isset($images[0]) ? $images[0] : null;
+                    $imageUrl = $firstImage 
+                        ? (str_starts_with($firstImage, 'http') ? $firstImage : asset('storage/' . $firstImage))
+                        : 'https://via.placeholder.com/300x200?text=No+Image';
+                @endphp
+                <img src="{{ $imageUrl }}"
                      alt="{{ $coinFlip->negotiation->product->name }}"
                      class="w-24 h-24 object-cover rounded-xl">
                 <div class="flex-1">

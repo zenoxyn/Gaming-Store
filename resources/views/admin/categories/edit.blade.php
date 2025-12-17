@@ -49,7 +49,7 @@
                             <div class="flex items-start gap-4">
                                 <div id="iconPreview" class="flex items-center justify-center w-24 h-24 overflow-hidden text-3xl border-2 border-dashed rounded-lg border-[#8a2be2]/30 bg-[#1a0b2e]">
                                     @if($category->icon)
-                                        <img src="{{ asset('storage/' . $category->icon) }}" alt="{{ $category->name }}" class="object-cover w-full h-full rounded-lg">
+                                        <img src="{{ str_starts_with($category->icon, 'http') ? $category->icon : asset('storage/' . $category->icon) }}" alt="{{ $category->name }}" class="object-cover w-full h-full rounded-lg">
                                     @else
                                         🎮
                                     @endif

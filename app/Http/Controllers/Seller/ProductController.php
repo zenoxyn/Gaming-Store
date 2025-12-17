@@ -83,8 +83,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // Check if product belongs to this seller
-        if ($product->id_seller !== Auth::user()->seller->id) {
+        $seller = Auth::user()->seller;
+        
+        // Check if seller exists and product belongs to this seller
+        if (!$seller || $product->id_seller != $seller->id) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -97,8 +99,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        // Check if product belongs to this seller
-        if ($product->id_seller !== Auth::user()->seller->id) {
+        $seller = Auth::user()->seller;
+        
+        // Check if seller exists and product belongs to this seller
+        if (!$seller || $product->id_seller != $seller->id) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -161,8 +165,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Check if product belongs to this seller
-        if ($product->id_seller !== Auth::user()->seller->id) {
+        $seller = Auth::user()->seller;
+        
+        // Check if seller exists and product belongs to this seller
+        if (!$seller || $product->id_seller != $seller->id) {
             abort(403, 'Unauthorized action.');
         }
 

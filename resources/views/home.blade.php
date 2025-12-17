@@ -75,8 +75,7 @@
         @foreach($categories as $category)
         <a href="{{ route('products.category', $category->slug) }}" class="relative block overflow-hidden rounded-xl group aspect-square border-2 border-[#8a2be2]/20 hover:border-[#8a2be2] transition-all">
             @if($category->icon)
-                <img src="{{ asset('storage/' . $category->icon) }}" alt="{{ $category->name }}"
-                    class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
+                <img src="{{ str_starts_with($category->icon, 'http') ? $category->icon : asset('storage/' . $category->icon) }}" alt="{{ $category->name }}" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
             @else
                 <div class="w-full h-full bg-linear-to-br from-[#2d1b4e] to-purple-900 flex items-center justify-center text-6xl">
                     🎮
