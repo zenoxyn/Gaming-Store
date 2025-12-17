@@ -1,59 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Gaming Store - Laravel Marketplace
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Gaming Store adalah aplikasi marketplace berbasis Laravel untuk jual beli item game, dengan fitur dompet digital, negosiasi harga, dashboard admin/seller/buyer, dan chat real-time.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   Registrasi & login multi-role (buyer, seller, admin)
+-   Dashboard khusus untuk buyer, seller, dan admin
+-   Manajemen produk & kategori
+-   Dompet digital (top up, transaksi, riwayat)
+-   Negosiasi harga antara buyer & seller
+-   Sistem pesanan & review
+-   Chat (bukan real-time)
+-   Responsive UI (Tailwind CSS)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Setup & Instalasi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Ikuti langkah berikut untuk menjalankan project ini secara lokal:
 
-## Learning Laravel
+### 1. Clone Repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+git clone https://github.com/username/Gaming-Store.git
+cd Gaming-Store
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Install Dependency PHP & JS
 
-## Laravel Sponsors
+```bash
+composer install
+npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Copy & Konfigurasi .env
 
-### Premium Partners
+```bash
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Edit file `.env` sesuai kebutuhan (database, mail, dsb).
 
-## Contributing
+### 4. Setup Midtrans Payment Gateway
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Untuk mengaktifkan pembayaran dengan Midtrans:
 
-## Code of Conduct
+1. Daftar akun di [Midtrans Dashboard](https://dashboard.midtrans.com/).
+2. Ambil `SERVER_KEY` dan `CLIENT_KEY` dari menu Settings > Access Keys.
+3. Tambahkan ke file `.env`:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```env
+    MIDTRANS_SERVER_KEY=your_server_key
+    MIDTRANS_CLIENT_KEY=your_client_key
+    MIDTRANS_IS_PRODUCTION=false
+    MIDTRANS_MERCHANT_ID=your_merchant_id
+    ```
 
-## Security Vulnerabilities
+4. Pastikan callback URL diatur ke:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    - `https://your-domain.com/midtrans/callback` (atau sesuai route di aplikasi)
 
-## License
+5. Untuk mode production, ubah `MIDTRANS_IS_PRODUCTION=true` dan pastikan domain sudah HTTPS.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Generate Key
+
+```bash
+php artisan key:generate
+```
+
+### 6. Migrasi & Seed Database
+
+```bash
+php artisan migrate --seed
+```
+
+### 7. Link Storage
+
+```bash
+php artisan storage:link
+```
+
+### 8. Build Asset Frontend
+
+```bash
+npm run build
+```
+
+atau untuk development:
+
+```bash
+npm run dev
+```
+
+### 9. Jalankan Server
+
+```bash
+php artisan serve
+```
+
+atau gunakan Laragon/XAMPP sesuai kebutuhan.
+
+---
+
+## Akun Demo (Opsional)
+
+-   Admin: admin@demo.com / password
+-   Seller: seller@demo.com / password
+-   Buyer: buyer@demo.com / password
+
+## Kontribusi
+
+Pull request & issue sangat diterima! Silakan fork repo ini dan buat PR untuk fitur/bugfix.
+
+## Lisensi
+
+MIT. Lihat LICENSE file.
