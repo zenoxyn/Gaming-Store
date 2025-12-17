@@ -102,9 +102,9 @@ atau gunakan Laragon/XAMPP sesuai kebutuhan.
 
 ## Akun Demo (Opsional)
 
--   Admin: admin@demo.com / password
--   Seller: seller@demo.com / password
--   Buyer: buyer@demo.com / password
+-   Admin: admin@example.com / password
+-   Seller: seller@example.com / password
+-   Buyer: buyer@example.com / password
 
 ## Kontribusi
 
