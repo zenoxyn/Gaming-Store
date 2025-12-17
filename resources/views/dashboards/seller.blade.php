@@ -34,26 +34,26 @@
             </div>
 
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                 <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
                     <h3 class="text-sm text-gray-300 mb-2">Wallet Balance</h3>
-                    <p class="text-3xl font-bold text-green-400">Rp {{ number_format(auth()->user()->wallet->balance ?? 0, 0, ',', '.') }}</p>
+                    <p class="text-2xl font-bold text-green-400">Rp {{ number_format(auth()->user()->wallet->balance ?? 0, 0, ',', '.') }}</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
                     <h3 class="text-sm text-gray-300 mb-2">Total Products</h3>
-                    <p class="text-3xl font-bold text-blue-400">{{ auth()->user()->products()->count() }}</p>
+                    <p class="text-2xl font-bold text-blue-400">{{ auth()->user()->products()->count() }}</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
                     <h3 class="text-sm text-gray-300 mb-2">Total Sales</h3>
-                    <p class="text-3xl font-bold text-purple-400">{{ auth()->user()->sellerOrders()->count() }}</p>
+                    <p class="text-2xl font-bold text-purple-400">{{ auth()->user()->sellerOrders()->count() }}</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
                     <h3 class="text-sm text-gray-300 mb-2">Negotiations</h3>
-                    <p class="text-3xl font-bold text-yellow-400">{{ auth()->user()->sellerNegotiations()->where('status', 'ongoing')->count() }}</p>
+                    <p class="text-2xl font-bold text-yellow-400">{{ auth()->user()->sellerNegotiations()->where('status', 'ongoing')->count() }}</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
                     <h3 class="text-sm text-gray-300 mb-2">Rating</h3>
-                    <p class="text-3xl font-bold text-yellow-400">
+                    <p class="text-2xl font-bold text-yellow-400">
                         {{ number_format(auth()->user()->seller->rating ?? 0, 1) }} ⭐
                     </p>
                 </div>
