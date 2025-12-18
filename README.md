@@ -1,6 +1,6 @@
 # Gaming Store - Laravel Marketplace
 
-Gaming Store adalah aplikasi marketplace berbasis Laravel untuk jual beli item game, dengan fitur dompet digital, negosiasi harga, dashboard admin/seller/buyer, dan chat real-time.
+Gaming Store adalah aplikasi marketplace berbasis Laravel untuk jual beli item game, dengan fitur dompet digital, negosiasi harga, dashboard admin/seller/buyer, dan chat real-time. 
 
 ## Fitur Utama
 
@@ -12,6 +12,26 @@ Gaming Store adalah aplikasi marketplace berbasis Laravel untuk jual beli item g
 -   Sistem pesanan & review
 -   Chat (bukan real-time)
 -   Responsive UI (Tailwind CSS)
+
+## URL
+
+<p align="center">
+    <a href="https://fryn.site/">https://fryn.site/</a>
+</p>
+
+## Screenshot
+
+<p align="center">
+   <img alt="image" src="screenshot/home.png"/>
+</p>
+
+<p align="center">
+   <img alt="image" src="screenshot/product.png"/>
+</p>
+
+<p align="center">
+   <img alt="image" src="screenshot/detail-product.png"/>
+</p>
 
 ## Setup & Instalasi
 

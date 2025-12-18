@@ -97,42 +97,43 @@
     <h2 class="mb-10 text-2xl font-bold">How it Works?</h2>
 
     <!-- Steps grid -->
-    <div class="grid grid-cols-2 gap-6 text-center lg:grid-cols-4">
+    <div class="grid grid-cols-2 gap-3 text-center md:gap-6 lg:grid-cols-4">
 
         <!-- Step 1 -->
-        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-8 rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
-            <div class="flex items-center justify-center w-20 h-20 mb-5 rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
-                <i class="text-4xl text-white ri-file-text-line"></i>
+        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
+            <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 mb-3 md:mb-5 rounded-xl md:rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
+                <i class="text-2xl md:text-4xl text-white ri-file-text-line"></i>
             </div>
-            <h3 class="mb-3 text-lg font-bold text-white">Registration</h3>
-            <p class="text-sm leading-relaxed text-gray-300">Register for free to unlock more features</p>
+            <h3 class="mb-2 md:mb-3 text-sm md:text-lg font-bold text-white">Registration</h3>
+            <p class="text-xs md:text-sm leading-relaxed text-gray-300 hidden md:block">Register for free to unlock more features</p>
         </div>
 
         <!-- Step 2 -->
-        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-8 rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
-            <div class="flex items-center justify-center w-20 h-20 mb-5 rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
-                <i class="text-4xl text-white ri-bank-card-line"></i>
+        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
+            <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 mb-3 md:mb-5 rounded-xl md:rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
+                <i class="text-2xl md:text-4xl text-white ri-bank-card-line"></i>
             </div>
-            <h3 class="mb-3 text-lg font-bold text-white">Payment</h3>
-            <p class="text-sm leading-relaxed text-gray-300">Checkout with your preferred method</p>
+            <h3 class="mb-2 md:mb-3 text-sm md:text-lg font-bold text-white">Payment</h3>
+            <p class="text-xs md:text-sm leading-relaxed text-gray-300 hidden md:block">Checkout with your preferred method</p>
         </div>
 
+
         <!-- Step 3 -->
-        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-8 rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
-            <div class="flex items-center justify-center w-20 h-20 mb-5 rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
-                <i class="text-4xl text-white ri-mail-send-line"></i>
+        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
+            <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 mb-3 md:mb-5 rounded-xl md:rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
+                <i class="text-2xl md:text-4xl text-white ri-mail-send-line"></i>
             </div>
-            <h3 class="mb-3 text-lg font-bold text-white">Delivery</h3>
-            <p class="text-sm leading-relaxed text-gray-300">Wait for your order to be delivered (some types are instant)</p>
+            <h3 class="mb-2 md:mb-3 text-sm md:text-lg font-bold text-white">Delivery</h3>
+            <p class="text-xs md:text-sm leading-relaxed text-gray-300 hidden md:block">Wait for your order to be delivered (some types are instant)</p>
         </div>
 
         <!-- Step 4 -->
-        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-8 rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
-            <div class="flex items-center justify-center w-20 h-20 mb-5 rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
-                <i class="text-4xl text-white ri-checkbox-line"></i>
+        <div class="flex flex-col items-center bg-[#2d1b4e]/60 backdrop-blur-sm p-4 md:p-8 rounded-xl md:rounded-2xl border-2 border-[#8a2be2]/30 hover:border-[#8a2be2] transition-all group hover:-translate-y-2">
+            <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 mb-3 md:mb-5 rounded-xl md:rounded-2xl bg-linear-to-br from-[#8a2be2] to-[#ff1493] shadow-lg group-hover:shadow-[#8a2be2]/50 transition-all">
+                <i class="text-2xl md:text-4xl text-white ri-checkbox-line"></i>
             </div>
-            <h3 class="mb-3 text-lg font-bold text-white">Confirmation</h3>
-            <p class="text-sm leading-relaxed text-gray-300">Validate delivery is made. The seller is only paid after this</p>
+            <h3 class="mb-2 md:mb-3 text-sm md:text-lg font-bold text-white">Confirmation</h3>
+            <p class="text-xs md:text-sm leading-relaxed text-gray-300 hidden md:block">Validate delivery is made. The seller is only paid after this</p>
         </div>
 
     </div>
