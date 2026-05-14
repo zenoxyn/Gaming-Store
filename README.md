@@ -40,7 +40,7 @@ Ikuti langkah berikut untuk menjalankan project ini secara lokal:
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/username/Gaming-Store.git
+git clone https://github.com/zenoxyn/Gaming-Store.git
 cd Gaming-Store
 ```
 
